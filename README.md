@@ -4,7 +4,7 @@ A minimal, working **Retrieval-Augmented Generation (RAG)** chatbot backend. Upl
 
 Built with **FastAPI** and **ChromaDB**, with a pluggable LLM layer supporting **OpenAI, Claude, Gemini, and local Ollama**. Runs with **no API key** in retrieval-only mode, and starts with one Docker command.
 
-This is the free starter edition. For the full production version — with a built-in chat UI, streaming, re-ranking, OCR, and more — see [Pro version](#-pro-version) below.
+This is the free starter edition. For the full production version — with a built-in chat UI, streaming, re-ranking, OCR, and more — see [Pro version](#pro-version) below.
 
 ---
 
