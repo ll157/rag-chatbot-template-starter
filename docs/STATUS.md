@@ -43,10 +43,13 @@
    - Git 远程推送权限=未验证（首次 push 时验证）；
    - 第 6 节补充：Gitee 同步规则（不阻塞 GitHub 交付、不未经检查用 `--mirror`、出问题先保 GitHub 与作品集）；12 道封存测试题隔离规则（调提示词/检索逻辑只用 18 道开发题；测试题不用于调试；据测试题修复即记录"已参与调试"）；
    - 克隆流程更正：origin=用户 Fork、upstream=原作者；上游 a66e18c 即基线，不再另造基线提交。
-3. **remote 重接**：待用户完成 Fork 后执行（origin 暂指上游）。
+3. **remote 重接 + 首次推送（已完成，2026-11-07）**：
+   - 用户 Fork：https://github.com/ll157/rag-chatbot-template-starter（其 main HEAD = a66e18c，与基线一致）
+   - `origin` → ll157/rag-chatbot-template-starter；`upstream` → panutpl/rag-chatbot-template-starter
+   - `git push -u origin feature/product-assistant` 成功 → **推送权限已验证**；分支已跟踪 origin/feature/product-assistant
 
 ### 未验证（如实记录）
-- Git 推送权限；真实 LLM API 调用；跨机器复现；HF 直连。
+- 真实 LLM API 调用；跨机器复现；HF 直连。
 
 ### 下一步（Day2，11-08）
 1. 用户决策：给 DeepSeek 充少量额度，或申请其他模型 API；我读 openai 适配代码补 base_url。
