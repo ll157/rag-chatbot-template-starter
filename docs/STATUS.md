@@ -56,3 +56,33 @@
 2. 整理虚构资料事实表（3 个型号，含易混淆型号、旧版、未写能力、受控冲突），用户逐行确认。
 3. 30 题分组（18 开发 + 12 封存测试）。
 4. doctor / check_project 最小骨架。
+
+## 2026-11-09 ｜ Day2（模型接入 + 事实表 + 语料 + 题库 + 检查脚本）
+
+### 大白话版今日说明（每日固定结构，跨天与跨 AI 接力保留）
+- **今天做了什么**：让 AI 第一次"开口说话"了（之前只会甩原文片段，现在会基于原文写出通顺回答）；编了一套 10 份互相引用、故意有矛盾和缺口的虚构说明书；出好了 30 道考题（18 道平时练习 + 12 道封存期末卷）；写好两个体检脚本并跑通。
+- **为什么**：这四样合起来 = 简历上"我做过一个能检索、能生成、有测试成绩单的 RAG 项目"的每一块砖。
+- **卡在哪**：第一次填的密钥无效（401，不是 sk- 开头，复制不完整）；用户重建密钥后一次通过。
+- **你要做什么**：无（今天你已完成的动作：认可事实表、重建密钥）。明早开始 Day3。
+
+### 已验证（附证据）
+1. **DeepSeek 接入**（提交 31c04eb）：新增 `DeepSeekProvider`（chat.completions，因上游 openai 走 OpenAI Responses API 不兼容 DeepSeek）+ config 三项 + factory 注册。
+   - 直连 provider 生成：输入 A200 保修问题 + 手册原文片段 → 输出"整机保修 24 个月……核心部件 36 个月"（正确）。
+   - 端到端 HTTP（LLM_PROVIDER=deepseek）：上传《A200_用户手册_v3.pdf》（4 页 4 切片）→ POST /api/v1/chat → 中文回答正确，sources 全部指向该手册。
+   - 模型：deepseek-flash；base_url https://api.deepseek.com（2026-11 官方文档核实；deepseek-chat 已不在现役文档）。
+   - **模型还主动指出了 Day1 旧演示 PDF 与新语料的保修冲突**（正确的"报冲突"行为）→ 已删除旧演示 PDF 避免语料污染。
+2. **事实表**：docs/corpus_facts.md（3 型号 9 项事实 + C1 受控冲突 + N1–N3 未涉及），用户已逐行认可。
+3. **语料 10 份 20 页**：D:\RAG项目\产品说明书\（仓库外，按用户指定），互相引用网络与"乱序设计清单"见 index.md；生成脚本 scripts/make_corpus.py 可复现；pypdf 验证页数与文本提取。
+4. **题库 30 道**：docs/eval/questions_dev.md（18 题，四类 4/5/4/5）+ docs/eval/sealed/questions_sealed.md（12 题，4/3/2/3，文件头写明隔离规则）。题面全部出自事实表。
+5. **检查脚本**：scripts/doctor.py（19 项，0 需处理）、scripts/check_project.py（6 项，0 需处理，含上传自清理与 404 错误路径）。chat 检查项在付费 provider 下按设计跳过。
+
+### 未验证 / 待办
+- 30 题尚未在批量入库后的索引上运行（Day3：批量上传 10 份 → 检索对照 → Day5 提示词，Day7 冻结，Day8 跑封存题）。
+- check_project 的 chat 检查在 retrieval 模式下的实跑（切换回 retrieval 时验证）。
+- 跨机器复现、HF 直连（维持未测）。
+
+### 环境备注（新增）
+- 当前 .env：LLM_PROVIDER=retrieval（默认）；测试时用环境变量 `$env:LLM_PROVIDER='deepseek'` 临时覆盖，不改动 .env。
+- 运行中的服务：deepseek 模式，127.0.0.1:8000，索引内现有 1 份文档（A200_用户手册_v3.pdf）。
+- 服务启动命令不变，需生成模式时加：`$env:LLM_PROVIDER='deepseek'`。
+
