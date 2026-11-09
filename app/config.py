@@ -34,6 +34,13 @@ class Settings(BaseSettings):
     claude_model: str = "claude-sonnet-4-5"
     claude_max_tokens: int = 1024
 
+    # DeepSeek (OpenAI-compatible Chat Completions)
+    deepseek_api_key: Optional[str] = None
+    deepseek_base_url: str = "https://api.deepseek.com"
+    deepseek_model: str = "deepseek-flash"
+    deepseek_max_tokens: int = 512
+    deepseek_timeout_seconds: int = 60
+
     model_config = SettingsConfigDict(
         env_file=".env",
         env_file_encoding="utf-8",

@@ -1,5 +1,6 @@
 from app.config import settings
 from app.services.llm.claude_provider import ClaudeProvider
+from app.services.llm.deepseek_provider import DeepSeekProvider
 from app.services.llm.gemini_provider import GeminiProvider
 from app.services.llm.ollama_provider import OllamaProvider
 from app.services.llm.openai_provider import OpenAIProvider
@@ -15,6 +16,9 @@ def get_llm_provider():
     if provider == "openai":
         return OpenAIProvider()
 
+    if provider == "deepseek":
+        return DeepSeekProvider()
+
     if provider == "ollama":
         return OllamaProvider()
 
@@ -26,6 +30,6 @@ def get_llm_provider():
 
     raise ValueError(
         f"Unsupported LLM_PROVIDER: {settings.llm_provider}. "
-        "Allowed values are: retrieval, openai, ollama, gemini, claude"
+        "Allowed values are: retrieval, openai, deepseek, ollama, gemini, claude"
     )
 
