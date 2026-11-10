@@ -8,8 +8,8 @@
     语料已批量入库（upload_corpus.py）。
 
 产出：
-    docs/eval/results/day3_baseline.csv        成绩单（Excel 可直接打开）
-    docs/eval/results/day3_baseline_raw.jsonl  原始回答与引用（排查用）
+    docs/eval/results/成绩单_时间戳.csv        成绩单（Excel 可直接打开）
+    docs/eval/results/原始记录_时间戳.jsonl    原始回答与引用（排查用）
 """
 
 import csv
@@ -98,8 +98,8 @@ def main() -> None:
 
     RESULT_DIR.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now().strftime("%Y%m%d_%H%M")
-    csv_path = RESULT_DIR / f"eval_{stamp}.csv"
-    raw_path = RESULT_DIR / f"eval_{stamp}_raw.jsonl"
+    csv_path = RESULT_DIR / f"成绩单_{stamp}.csv"
+    raw_path = RESULT_DIR / f"原始记录_{stamp}.jsonl"
 
     rows = []
     errors = 0
