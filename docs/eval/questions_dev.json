@@ -1,0 +1,168 @@
+{
+  "version": "dev-v1 (day3 baseline)",
+  "note": "机器可读版开发题。判分规则：expect=answer 时须包含全部 must_contain 关键词（匹配前去除所有空白）；expect=conflict 时须同时出现两个冲突数字或任一冲突表述词；expect=no_answer 时须命中任一『未提及』类否定表述。题目唯一事实源见 docs/corpus_facts.md。",
+  "questions": [
+    {
+      "id": "D-01",
+      "category": "直接查找",
+      "question": "A200 的整机保修期是多久？",
+      "expect": "answer",
+      "must_contain": ["24个月"],
+      "expected_fact": "24 个月",
+      "source": "A200_用户手册_v3 第1页"
+    },
+    {
+      "id": "D-02",
+      "category": "直接查找",
+      "question": "A200 睡眠档运行噪音是多少？",
+      "expect": "answer",
+      "must_contain": ["32"],
+      "expected_fact": "32 dB",
+      "source": "A200_用户手册_v3 第2页"
+    },
+    {
+      "id": "D-03",
+      "category": "直接查找",
+      "question": "A200 的包装清单里有哪些东西？",
+      "expect": "answer",
+      "must_contain": ["主机", "F-10", "电源线", "说明书"],
+      "expected_fact": "主机、F-10 滤芯×1、电源线、说明书",
+      "source": "A200_用户手册_v3 第1页"
+    },
+    {
+      "id": "D-04",
+      "category": "直接查找",
+      "question": "A200 Pro 适合多大的房间？",
+      "expect": "answer",
+      "must_contain": ["35", "60"],
+      "expected_fact": "35–60 ㎡",
+      "source": "A200Pro_用户手册_v1 第1页"
+    },
+    {
+      "id": "D-05",
+      "category": "跨文档综合",
+      "question": "A200 和 A200 Pro 的整机保修一样吗？",
+      "expect": "answer",
+      "must_contain": ["24"],
+      "expected_fact": "一样，均 24 个月",
+      "source": "手册v3第1页 + Pro手册第1页 + 售后政策第1页"
+    },
+    {
+      "id": "D-06",
+      "category": "跨文档综合",
+      "question": "F-10 滤芯能装到 A200 Pro 上吗？",
+      "expect": "answer",
+      "must_contain": ["F-20"],
+      "expected_fact": "不能，Pro 用 F-20",
+      "source": "滤芯指南第1页 + FAQ第1页"
+    },
+    {
+      "id": "D-07",
+      "category": "跨文档综合",
+      "question": "A200 v1 停产了，还能买到它的滤芯吗？",
+      "expect": "answer",
+      "must_contain": ["F-10"],
+      "expected_fact": "能，F-10 现售且适配 v1",
+      "source": "v1手册第2页 + 滤芯指南第1页"
+    },
+    {
+      "id": "D-08",
+      "category": "跨文档综合",
+      "question": "A200 和 Pro 的滤芯仓在哪里？怎么换？",
+      "expect": "answer",
+      "must_contain": ["底部", "顶部"],
+      "expected_fact": "A200/v1 底部仓，Pro 顶部仓；步骤见手册",
+      "source": "手册v3第2页 + Pro手册第2页"
+    },
+    {
+      "id": "D-09",
+      "category": "跨文档综合",
+      "question": "售后服务流程和热线是什么？",
+      "expect": "answer",
+      "must_contain": ["400", "15"],
+      "expected_fact": "400 热线 + 凭证 + 15 工作日（号码为虚构占位）",
+      "source": "售后政策_通用 第2页"
+    },
+    {
+      "id": "D-10",
+      "category": "型号/版本混淆",
+      "question": "A200 和 A200 v1 用同一种滤芯吗？",
+      "expect": "answer",
+      "must_contain": ["F-10"],
+      "expected_fact": "是，都是 F-10；但保修不同（24 vs 12 个月）",
+      "source": "v1手册第2页 + 手册v3第2页"
+    },
+    {
+      "id": "D-11",
+      "category": "型号/版本混淆",
+      "question": "A200 v1 的整机保修是多久？",
+      "expect": "answer",
+      "must_contain": ["12"],
+      "expected_fact": "12 个月（与 A200 的 24 个月不同）",
+      "source": "v1手册第1页 + 售后政策第2页"
+    },
+    {
+      "id": "D-12",
+      "category": "型号/版本混淆",
+      "question": "A200 Pro 有遥控器吗？A200 呢？",
+      "expect": "answer",
+      "must_contain": ["遥控器"],
+      "expected_fact": "Pro 有（含配对方法）；A200 无遥控器",
+      "source": "Pro手册第1、3页 + 手册v3第1页"
+    },
+    {
+      "id": "D-13",
+      "category": "型号/版本混淆",
+      "question": "A200 睡眠档噪音到底是 32 还是 35 分贝？",
+      "expect": "answer",
+      "must_contain": ["32"],
+      "expected_fact": "32 dB（35 是 v2 误印，且 35 是 v1 机型的数值）",
+      "source": "手册v3第2页 + 勘误E-01 + v1手册第2页"
+    },
+    {
+      "id": "D-14",
+      "category": "无答案/冲突",
+      "question": "A200 保修到底是 24 个月还是 36 个月？",
+      "expect": "conflict",
+      "must_contain": [],
+      "expected_fact": "报告冲突：说明书 24 vs 宣传页 36，以说明书为准",
+      "source": "手册v3第1页 + 宣传单页 + 勘误E-02"
+    },
+    {
+      "id": "D-15",
+      "category": "无答案/冲突",
+      "question": "A200 能用手机 App 远程控制吗？",
+      "expect": "no_answer",
+      "must_contain": [],
+      "expected_fact": "资料未提及任何 App/远程控制功能（N1）",
+      "source": "全部语料均无"
+    },
+    {
+      "id": "D-16",
+      "category": "无答案/冲突",
+      "question": "A200 的 CADR 值是多少？",
+      "expect": "no_answer",
+      "must_contain": [],
+      "expected_fact": "资料未提供 CADR/出风量参数",
+      "source": "FAQ第2页明确『未提供』"
+    },
+    {
+      "id": "D-17",
+      "category": "无答案/冲突",
+      "question": "其他品牌的滤芯能用在 A200 上吗？",
+      "expect": "no_answer",
+      "must_contain": [],
+      "expected_fact": "资料不讨论第三方兼容性，仅保证原厂",
+      "source": "滤芯指南第2页 + FAQ第2页"
+    },
+    {
+      "id": "D-18",
+      "category": "无答案/冲突",
+      "question": "A200 Pro 有延保服务吗？",
+      "expect": "no_answer",
+      "must_contain": [],
+      "expected_fact": "资料只写整机 24 个月，未写任何延保政策（N3）",
+      "source": "Pro手册第1页 + 售后政策"
+    }
+  ]
+}
