@@ -7,9 +7,9 @@ class Settings(BaseSettings):
     app_name: str = "RAG Chatbot Starter"
     app_env: str = "local"
 
-    upload_dir: str = "data/uploads"
-    chroma_dir: str = "data/chroma"
-    documents_metadata_path: str = "data/documents.json"
+    upload_dir: str = "数据/上传文件"
+    chroma_dir: str = "数据/向量库"
+    documents_metadata_path: str = "数据/文档清单.json"
 
     embedding_model: str = "sentence-transformers/paraphrase-multilingual-MiniLM-L12-v2"
 

@@ -8,8 +8,8 @@
     语料已批量入库（upload_corpus.py）。
 
 产出：
-    docs/eval/results/成绩单_时间戳.csv        成绩单（Excel 可直接打开）
-    docs/eval/results/原始记录_时间戳.jsonl    原始回答与引用（排查用）
+    docs/eval/测试结果/成绩单_时间戳.csv        成绩单（Excel 可直接打开）
+    docs/eval/测试结果/原始记录_时间戳.jsonl    原始回答与引用（排查用）
 """
 
 import csv
@@ -24,7 +24,7 @@ import requests
 ROOT = Path(__file__).resolve().parent.parent
 BASE = "http://127.0.0.1:8000"
 QUESTIONS = ROOT / "docs" / "eval" / "questions_dev.json"
-RESULT_DIR = ROOT / "docs" / "eval" / "results"
+RESULT_DIR = ROOT / "docs" / "eval" / "测试结果"
 CHAT_TIMEOUT = 120
 SLEEP_BETWEEN = 1.0  # 每题间隔，避免请求过密
 

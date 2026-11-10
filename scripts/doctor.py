@@ -36,7 +36,7 @@ for mod in ["fastapi", "uvicorn", "chromadb", "sentence_transformers", "openai",
         add(WARN, f"依赖 {mod}", f"导入失败：{type(e).__name__}", "在 .venv 中重装该依赖")
 
 # 3. 数据目录存在且可写
-for d in ["data/uploads", "data/chroma"]:
+for d in ["数据/上传文件", "数据/向量库"]:
     p = ROOT / d
     if p.exists():
         try:

@@ -4,12 +4,12 @@
 __pycache__/
 *.pyc
 
-data/uploads/*
-!data/uploads/.gitkeep
+数据/上传文件/*
+!数据/上传文件/.gitkeep
 
-data/chroma/*
-!data/chroma/.gitkeep
+数据/向量库/*
+!数据/向量库/.gitkeep
 
-data/documents.json
+数据/文档清单.json
 
 .DS_Store
