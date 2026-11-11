@@ -255,6 +255,8 @@
       <button id="askBtn" onclick="ask()">💬 提问</button>
       <div id="askMsg" class="msg"></div>
 
+      <div id="subqBox" class="answer-card" style="display:none;background:#eff6ff;border-color:#bfdbfe;"></div>
+
       <div id="answerCard" class="answer-card"></div>
 
       <div id="sourcesBox" class="sources">
@@ -282,6 +284,15 @@ function setBusy(btnId, busy, busyText, normalText) {
 
 function fillQ(q) {
   document.getElementById("questionInput").value = q;
+}
+
+/* 迷你 markdown 渲染：先转义 HTML 防注入，再处理加粗/标题/列表 */
+function renderMD(text) {
+  let s = text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  s = s.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>");
+  s = s.replace(/^#{1,6}\s*(.+)$/gm, "<strong>$1</strong>");
+  s = s.replace(/^[-*]\s+(.+)$/gm, "• $1");
+  return s;
 }
 
 /* ---------- 文档清单 ---------- */
@@ -357,9 +368,11 @@ async function ask() {
     return;
   }
   document.getElementById("answerCard").style.display = "none";
+  document.getElementById("subqBox").style.display = "none";
   document.getElementById("sourcesBox").style.display = "none";
 
   setBusy("askBtn", true, "AI 正在查资料并作答…", "💬 提问");
+  const startedAt = Date.now();
   try {
     const resp = await fetch(API + "/chat", {
       method: "POST",
@@ -371,9 +384,21 @@ async function ask() {
       throw new Error(err.detail || ("HTTP " + resp.status));
     }
     const data = await resp.json();
+    const elapsed = ((Date.now() - startedAt) / 1000).toFixed(1);
+
+    /* 拆分透明化：显示 AI 把复合问题拆成了哪几个子问题 */
+    const subs = data.sub_questions || [];
+    const subBox = document.getElementById("subqBox");
+    if (subs.length > 1) {
+      subBox.innerHTML = "🔀 检测到复合问题，拆分为 " + subs.length +
+        " 个子问题：<br>" + subs.map((s, i) => (i + 1) + ". " + s).join("<br>");
+      subBox.style.display = "block";
+    }
+
     const card = document.getElementById("answerCard");
-    card.textContent = data.answer;
+    card.innerHTML = renderMD(data.answer);
     card.style.display = "block";
+    showMsg("askMsg", "✅ 回答完成（耗时 " + elapsed + " 秒）", "ok");
 
     const list = document.getElementById("sourceList");
     list.innerHTML = (data.sources || []).map(s =>

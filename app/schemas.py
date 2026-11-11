@@ -80,3 +80,4 @@ class Source(BaseModel):
 class ChatResponse(BaseModel):
     answer: str
     sources: List[Source] = Field(default_factory=list)
+    sub_questions: List[str] = Field(default_factory=list)
