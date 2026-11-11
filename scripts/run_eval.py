@@ -14,6 +14,7 @@
 
 import csv
 import json
+import re
 import sys
 import time
 from datetime import datetime
@@ -35,6 +36,13 @@ NO_ANSWER_PATTERNS = [
     "无法回答", "没有记载", "没有写", "未包含", "无此",
     # 2026-11-10 补：D-18 冤案教训——AI 会说"无法从提供的文档中找到"
     "无法从", "无法找到", "找不到", "无法确认", "无法确定", "检索不到",
+    # 2026-11-11 补：D-17 冤案教训——整词匹配抓不住"未说明"和隔字否定
+    "未说明", "不能确认", "无法判断", "无从",
+]
+# 正则兜底："无法…确认"这类中间隔字的否定（整词匹配的天敌）
+NO_ANSWER_REGEX = [
+    r"无法[\s\S]{0,15}?(确认|确定|回答|判断|找到)",
+    r"未[\s\S]{0,6}?(提及|说明|提供|介绍|包含|记载)",
 ]
 # expect=conflict 的判分：报冲突的表述词（两个数字则由脚本单独比对）
 CONFLICT_WORDS = ["冲突", "矛盾", "不一致", "以说明书为准", "以说明书版本为准"]
@@ -76,8 +84,10 @@ def grade(item: dict, answer: str) -> tuple:
 
     if expect == "no_answer":
         hit = [p for p in NO_ANSWER_PATTERNS if p in a]
-        if hit:
-            return "PASS", f"命中否定表述: {hit[0]}"
+        regex_hit = next((r"正则: 无法…确认类" for rx in NO_ANSWER_REGEX
+                          if re.search(rx, a)), None)
+        if hit or regex_hit:
+            return "PASS", f"命中否定表述: {hit[0] if hit else regex_hit}"
         return "FAIL", "未见否定表述，疑似编造了答案"
 
     if expect == "conflict":
