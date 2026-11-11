@@ -53,6 +53,10 @@ def save_document_metadata(
     chunk_count: int,
     stored_chunk_count: int,
     ocr_page_count: int = 0,
+    product_model: Optional[str] = None,
+    version: Optional[str] = None,
+    doc_type: Optional[str] = None,
+    is_current: Optional[bool] = None,
 ) -> dict:
     documents = _read_documents()
 
@@ -67,6 +71,10 @@ def save_document_metadata(
         "chunk_count": chunk_count,
         "stored_chunk_count": stored_chunk_count,
         "ocr_page_count": ocr_page_count,
+        "product_model": product_model,
+        "version": version,
+        "doc_type": doc_type,
+        "is_current": is_current,
         "created_at": datetime.now(timezone.utc).isoformat(),
     }
 

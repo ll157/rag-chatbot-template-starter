@@ -1,4 +1,7 @@
+from pathlib import Path
+
 from fastapi import FastAPI
+from fastapi.responses import FileResponse
 
 from app.config import settings
 from app.routers import chat, documents, upload
@@ -9,14 +12,12 @@ app = FastAPI(
     description="A minimal FastAPI starter for building RAG chatbots.",
 )
 
+INDEX_HTML = Path(__file__).resolve().parent / "static" / "index.html"
+
 
 @app.get("/")
 def root():
-    return {
-        "name": settings.app_name,
-        "docs": "/docs",
-        "health": "/health",
-    }
+    return FileResponse(INDEX_HTML)
 
 
 @app.get("/health")

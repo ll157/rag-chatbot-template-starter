@@ -1,4 +1,6 @@
-from fastapi import APIRouter, File, HTTPException, UploadFile
+from typing import Optional
+
+from fastapi import APIRouter, File, Form, HTTPException, UploadFile
 
 from app.config import settings
 from app.schemas import DocumentChunk, DocumentUploadResponse
@@ -19,7 +21,13 @@ router = APIRouter()
 
 
 @router.post("/upload", response_model=DocumentUploadResponse)
-async def upload_document(file: UploadFile = File(...)):
+async def upload_document(
+    file: UploadFile = File(...),
+    product_model: Optional[str] = Form(None),
+    version: Optional[str] = Form(None),
+    doc_type: Optional[str] = Form(None),
+    is_current: Optional[bool] = Form(None),
+):
     try:
         saved_file = await save_pdf_file(file=file, upload_dir=settings.upload_dir)
 
@@ -52,6 +60,10 @@ async def upload_document(file: UploadFile = File(...)):
             total_characters=total_characters,
             chunk_count=len(chunks),
             stored_chunk_count=stored_chunk_count,
+            product_model=product_model,
+            version=version,
+            doc_type=doc_type,
+            is_current=is_current,
         )
 
         chunks_preview = [

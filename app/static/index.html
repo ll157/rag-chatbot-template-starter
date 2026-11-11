@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>产品说明书智能问答系统</title>
+<style>
+  :root {
+    --primary: #2563eb;
+    --primary-dark: #1d4ed8;
+    --bg: #f1f5f9;
+    --card: #ffffff;
+    --text: #0f172a;
+    --muted: #64748b;
+    --border: #e2e8f0;
+    --ok: #16a34a;
+    --err: #dc2626;
+    --radius: 12px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: "Microsoft YaHei", "PingFang SC", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+  header {
+    background: linear-gradient(135deg, #1e3a8a, #2563eb);
+    color: #fff;
+    padding: 22px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  header h1 { font-size: 20px; font-weight: 600; }
+  header .sub { font-size: 13px; opacity: .85; }
+  .layout {
+    display: grid;
+    grid-template-columns: 380px 1fr;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1280px;
+    margin: 0 auto;
+  }
+  @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }
+  .card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: 0 1px 3px rgba(15, 23, 42, .08);
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  .card h2 {
+    font-size: 15px;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .card h2 .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--primary); }
+  label { display: block; font-size: 13px; color: var(--muted); margin: 10px 0 4px; }
+  input[type="text"], input[type="file"], select {
+    width: 100%;
+    padding: 9px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fff;
+    outline: none;
+  }
+  input:focus, select:focus { border-color: var(--primary); }
+  .row { display: flex; gap: 10px; }
+  .row > div { flex: 1; }
+  button {
+    background: var(--primary);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background .15s;
+    margin-top: 12px;
+    width: 100%;
+  }
+  button:hover { background: var(--primary-dark); }
+  button:disabled { background: #94a3b8; cursor: not-allowed; }
+  button.small {
+    width: auto;
+    padding: 5px 12px;
+    font-size: 12px;
+    margin: 0;
+    background: #fee2e2;
+    color: var(--err);
+  }
+  button.small:hover { background: #fecaca; }
+  .msg {
+    margin-top: 10px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-size: 13px;
+    display: none;
+    word-break: break-all;
+  }
+  .msg.ok { display: block; background: #dcfce7; color: var(--ok); }
+  .msg.err { display: block; background: #fee2e2; color: var(--err); }
+  .msg.info { display: block; background: #dbeafe; color: var(--primary-dark); }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th, td { text-align: left; padding: 7px 8px; border-bottom: 1px solid var(--border); }
+  th { color: var(--muted); font-weight: 500; }
+  td .tag {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-size: 12px;
+    background: #e0e7ff;
+    color: var(--primary-dark);
+    margin-right: 4px;
+  }
+  .badge-yes { background: #dcfce7; color: var(--ok); }
+  .badge-no  { background: #fee2e2; color: var(--err); }
+  .question-box {
+    width: 100%;
+    min-height: 70px;
+    padding: 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    resize: vertical;
+    outline: none;
+    font-family: inherit;
+  }
+  .question-box:focus { border-color: var(--primary); }
+  .examples { margin-top: 8px; font-size: 12px; color: var(--muted); }
+  .examples span {
+    display: inline-block;
+    margin: 3px 4px 0 0;
+    padding: 4px 10px;
+    background: #f1f5f9;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: background .15s;
+  }
+  .examples span:hover { background: #e0e7ff; }
+  .answer-card {
+    margin-top: 14px;
+    padding: 16px;
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    font-size: 14px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    display: none;
+  }
+  .sources { margin-top: 14px; display: none; }
+  .sources h3 { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+  .source-item {
+    padding: 10px 12px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 8px;
+    font-size: 13px;
+    background: #fff;
+  }
+  .source-item .meta { color: var(--primary-dark); font-weight: 600; margin-bottom: 4px; }
+  .source-item .text { color: var(--muted); line-height: 1.6; }
+  .empty { color: var(--muted); font-size: 13px; padding: 8px 0; }
+  .spinner {
+    display: inline-block;
+    width: 14px; height: 14px;
+    border: 2px solid #fff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin .7s linear infinite;
+    vertical-align: -2px;
+    margin-right: 6px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📖 产品说明书智能问答系统</h1>
+  <div class="sub">本地服务 127.0.0.1:8000 ｜ 上传 → 提问 → 看证据</div>
+</header>
+
+<div class="layout">
+  <!-- 左列：上传 + 文档清单 -->
+  <div>
+    <div class="card">
+      <h2><span class="dot"></span>上传文档</h2>
+      <label>选择 PDF 文件</label>
+      <input type="file" id="fileInput" accept=".pdf">
+      <div class="row">
+        <div>
+          <label>适用型号</label>
+          <input type="text" id="productModel" placeholder="如 A200 / A200 Pro">
+        </div>
+        <div>
+          <label>版本</label>
+          <input type="text" id="version" placeholder="如 v1 / v3">
+        </div>
+      </div>
+      <div class="row">
+        <div>
+          <label>文档类型</label>
+          <select id="docType">
+            <option value="用户手册">用户手册</option>
+            <option value="安装指南">安装指南</option>
+            <option value="FAQ">常见问题</option>
+            <option value="宣传单页">宣传单页</option>
+            <option value="进货清单">进货清单</option>
+            <option value="选购指南">选购指南</option>
+            <option value="其他">其他</option>
+          </select>
+        </div>
+        <div>
+          <label>是否当前适用</label>
+          <select id="isCurrent">
+            <option value="true">是</option>
+            <option value="false">否（旧版）</option>
+          </select>
+        </div>
+      </div>
+      <button id="uploadBtn" onclick="uploadFile()">⬆ 上传并入知识库</button>
+      <div id="uploadMsg" class="msg"></div>
+    </div>
+
+    <div class="card">
+      <h2><span class="dot"></span>知识库文档清单（<span id="docCount">0</span> 份）</h2>
+      <div id="docList"><div class="empty">加载中…</div></div>
+    </div>
+  </div>
+
+  <!-- 右列：提问 -->
+  <div>
+    <div class="card">
+      <h2><span class="dot"></span>提问</h2>
+      <textarea id="questionInput" class="question-box"
+        placeholder="输入关于产品的问题，例如：A200 的保修期是多久？"></textarea>
+      <div class="examples">
+        试一试：
+        <span onclick="fillQ('A200 和 A200 Pro 的整机保修期分别是多久？')">保修期对比</span>
+        <span onclick="fillQ('A200 和 Pro 的滤芯仓在哪里？')">滤芯仓位置</span>
+        <span onclick="fillQ('A200 Pro 支持几市输入电压？')">电压规格</span>
+        <span onclick="fillQ('A200 Pro 有延保服务吗？')">延保（应答"资料没有"）</span>
+      </div>
+      <button id="askBtn" onclick="ask()">💬 提问</button>
+      <div id="askMsg" class="msg"></div>
+
+      <div id="answerCard" class="answer-card"></div>
+
+      <div id="sourcesBox" class="sources">
+        <h3>📎 回答依据（AI 实际引用的原文片段）</h3>
+        <div id="sourceList"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+const API = "/api/v1";
+
+function showMsg(id, text, type) {
+  const el = document.getElementById(id);
+  el.textContent = text;
+  el.className = "msg " + type;
+}
+
+function setBusy(btnId, busy, busyText, normalText) {
+  const btn = document.getElementById(btnId);
+  btn.disabled = busy;
+  btn.innerHTML = busy ? '<span class="spinner"></span>' + busyText : normalText;
+}
+
+function fillQ(q) {
+  document.getElementById("questionInput").value = q;
+}
+
+/* ---------- 文档清单 ---------- */
+async function loadDocuments() {
+  const box = document.getElementById("docList");
+  try {
+    const resp = await fetch(API + "/documents");
+    const data = await resp.json();
+    document.getElementById("docCount").textContent = data.total;
+    if (!data.documents.length) {
+      box.innerHTML = '<div class="empty">知识库是空的，先上传一份 PDF。</div>';
+      return;
+    }
+    box.innerHTML = "<table><tr><th>文件名</th><th>型号/版本</th><th>状态</th><th></th></tr>" +
+      data.documents.map(d => {
+        const tag = d.is_current === true
+          ? '<span class="tag badge-yes">当前适用</span>'
+          : d.is_current === false
+            ? '<span class="tag badge-no">旧版</span>'
+            : "";
+        const del = `<button class="small" onclick="deleteDoc('${d.document_id}')">删除</button>`;
+        return `<tr><td>${d.original_filename}</td>
+                <td>${d.product_model || "—"} ${d.version ? "/ " + d.version : ""}</td>
+                <td>${tag}</td><td>${del}</td></tr>`;
+      }).join("") + "</table>";
+  } catch (e) {
+    box.innerHTML = '<div class="empty">加载失败：服务未启动？</div>';
+  }
+}
+
+/* ---------- 上传 ---------- */
+async function uploadFile() {
+  const fileInput = document.getElementById("fileInput");
+  if (!fileInput.files.length) {
+    showMsg("uploadMsg", "请先选择一个 PDF 文件", "err");
+    return;
+  }
+  const form = new FormData();
+  form.append("file", fileInput.files[0]);
+  const pm = document.getElementById("productModel").value.trim();
+  const ver = document.getElementById("version").value.trim();
+  if (pm) form.append("product_model", pm);
+  if (ver) form.append("version", ver);
+  form.append("doc_type", document.getElementById("docType").value);
+  form.append("is_current", document.getElementById("isCurrent").value);
+
+  setBusy("uploadBtn", true, "正在入库（切片段→转向量→存库）…", "⬆ 上传并入知识库");
+  showMsg("uploadMsg", "上传中，大文件需要十几秒…", "info");
+  try {
+    const resp = await fetch(API + "/documents/upload", { method: "POST", body: form });
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      throw new Error(err.detail || ("HTTP " + resp.status));
+    }
+    const data = await resp.json();
+    showMsg("uploadMsg",
+      `✅ 入库成功：${data.original_filename}｜${data.page_count} 页 → ${data.stored_chunk_count} 个片段`,
+      "ok");
+    fileInput.value = "";
+    loadDocuments();
+  } catch (e) {
+    showMsg("uploadMsg", "❌ 上传失败：" + e.message, "err");
+  } finally {
+    setBusy("uploadBtn", false, "", "⬆ 上传并入知识库");
+  }
+}
+
+/* ---------- 提问 ---------- */
+async function ask() {
+  const q = document.getElementById("questionInput").value.trim();
+  if (!q) {
+    showMsg("askMsg", "请输入问题", "err");
+    return;
+  }
+  document.getElementById("answerCard").style.display = "none";
+  document.getElementById("sourcesBox").style.display = "none";
+
+  setBusy("askBtn", true, "AI 正在查资料并作答…", "💬 提问");
+  try {
+    const resp = await fetch(API + "/chat", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question: q, top_k: 4 }),
+    });
+    if (!resp.ok) {
+      const err = await resp.json().catch(() => ({}));
+      throw new Error(err.detail || ("HTTP " + resp.status));
+    }
+    const data = await resp.json();
+    const card = document.getElementById("answerCard");
+    card.textContent = data.answer;
+    card.style.display = "block";
+
+    const list = document.getElementById("sourceList");
+    list.innerHTML = (data.sources || []).map(s =>
+      `<div class="source-item">
+        <div class="meta">📄 ${s.filename || "未知文件"}${s.page != null ? " · 第 " + s.page + " 页" : ""}</div>
+        <div class="text">${(s.text || "").slice(0, 150)}…</div>
+      </div>`).join("") || '<div class="empty">无引用</div>';
+    document.getElementById("sourcesBox").style.display = "block";
+    showMsg("askMsg", "", "ok");
+  } catch (e) {
+    showMsg("askMsg", "❌ 提问失败：" + e.message, "err");
+  } finally {
+    setBusy("askBtn", false, "", "💬 提问");
+  }
+}
+
+/* ---------- 删除 ---------- */
+async function deleteDoc(id) {
+  if (!confirm("确定从知识库删除这份文档？")) return;
+  try {
+    const resp = await fetch(API + "/documents/" + id, { method: "DELETE" });
+    if (!resp.ok) throw new Error("HTTP " + resp.status);
+    loadDocuments();
+  } catch (e) {
+    alert("删除失败：" + e.message);
+  }
+}
+
+loadDocuments();
+</script>
+</body>
+</html>

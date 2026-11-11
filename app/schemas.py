@@ -44,6 +44,10 @@ class DocumentInfo(BaseModel):
     total_characters: int
     chunk_count: int
     stored_chunk_count: int
+    product_model: Optional[str] = None
+    version: Optional[str] = None
+    doc_type: Optional[str] = None
+    is_current: Optional[bool] = None
     created_at: str
 
 
