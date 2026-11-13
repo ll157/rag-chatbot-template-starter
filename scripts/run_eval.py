@@ -2,16 +2,27 @@
 
 用法：
     .\\.venv\\Scripts\\python.exe scripts\\run_eval.py
+    .\\.venv\\Scripts\\python.exe scripts\\run_eval.py --top-k 3 --limit 8 --tag topk3
+    .\\.venv\\Scripts\\python.exe scripts\\run_eval.py --ids D-01,D-06,D-14
+
+参数：
+    --top-k   每次检索几段资料（默认 4，做参数对照实验用）
+    --limit   只跑前 N 题（省钱做小样本对照）
+    --ids     只跑指定题号（逗号分隔）
+    --tag     文件名标签（如 topk3 → 成绩单_topk3_时间戳.csv）
 
 前置条件：
     服务已启动且 LLM_PROVIDER=deepseek（生成模式）；
     语料已批量入库（upload_corpus.py）。
 
 产出：
-    docs/eval/测试结果/成绩单_时间戳.csv        成绩单（Excel 可直接打开）
-    docs/eval/测试结果/原始记录_时间戳.jsonl    原始回答与引用（排查用）
+    docs/eval/测试结果/成绩单[_标签]_时间戳.csv        成绩单（Excel 可直接打开）
+    docs/eval/测试结果/原始记录[_标签]_时间戳.jsonl    原始回答与引用（排查用）
+
+成绩单新增列：耗时(ms)、估算模型调用次数、拆分子问题列表（Day6）。
 """
 
+import argparse
 import csv
 import json
 import re
@@ -102,14 +113,27 @@ def grade(item: dict, answer: str) -> tuple:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description="RAG 评测（支持 top_k 对照实验）")
+    parser.add_argument("--top-k", type=int, default=4, help="每次检索几段资料（默认 4）")
+    parser.add_argument("--limit", type=int, default=0, help="只跑前 N 题（0=全部）")
+    parser.add_argument("--ids", type=str, default="", help="只跑指定题号，逗号分隔")
+    parser.add_argument("--tag", type=str, default="", help="文件名标签，如 topk3")
+    args = parser.parse_args()
+
     check_health()
     items = json.loads(QUESTIONS.read_text(encoding="utf-8"))["questions"]
-    print(f"加载 {len(items)} 道题，开始评测（预计 2~4 分钟）...\n")
+    if args.ids:
+        wanted = {x.strip() for x in args.ids.split(",") if x.strip()}
+        items = [it for it in items if it["id"] in wanted]
+    if args.limit:
+        items = items[: args.limit]
+    print(f"加载 {len(items)} 道题（top_k={args.top_k}），开始评测...\n")
 
     RESULT_DIR.mkdir(parents=True, exist_ok=True)
     stamp = datetime.now().strftime("%Y%m%d_%H%M")
-    csv_path = RESULT_DIR / f"成绩单_{stamp}.csv"
-    raw_path = RESULT_DIR / f"原始记录_{stamp}.jsonl"
+    tag = f"{args.tag}_" if args.tag else ""
+    csv_path = RESULT_DIR / f"成绩单_{tag}{stamp}.csv"
+    raw_path = RESULT_DIR / f"原始记录_{tag}{stamp}.jsonl"
 
     rows = []
     errors = 0
@@ -117,8 +141,10 @@ def main() -> None:
     with raw_path.open("w", encoding="utf-8") as raw_fh:
         for i, item in enumerate(items, 1):
             qid = item["id"]
+            started = time.time()
+            data = {}
             try:
-                data = ask(item["question"])
+                data = ask(item["question"], top_k=args.top_k)
                 answer = data.get("answer", "")
                 sources = [
                     f"{s.get('filename')} 第{s.get('page')}页"
@@ -129,8 +155,15 @@ def main() -> None:
                 answer, sources = f"<请求失败: {str(exc)[:120]}>", []
                 grade_, detail = "ERROR", "请求失败"
                 errors += 1
+            elapsed_ms = int((time.time() - started) * 1000)
 
-            print(f"[{i}/{len(items)}] {qid} {grade_:4s} | {detail}")
+            # 估算模型调用次数：每个子问题回答 1 次；被拆分时拆分本身再 1 次
+            subs = data.get("sub_questions") or []
+            est_calls = len(subs) if subs else 1
+            if len(subs) > 1:
+                est_calls += 1
+
+            print(f"[{i}/{len(items)}] {qid} {grade_:4s} | {detail} | {elapsed_ms}ms")
             rows.append({
                 "id": qid,
                 "category": item["category"],
@@ -140,10 +173,17 @@ def main() -> None:
                 "question": item["question"],
                 "answer": answer[:500],
                 "sources": " ; ".join(sources),
+                "耗时ms": elapsed_ms,
+                "模型调用(估)": est_calls,
+                "子问题": " / ".join(subs),
             })
             raw_fh.write(json.dumps({
                 "id": qid, "question": item["question"],
                 "answer": answer, "sources": data.get("sources", []),
+                "sub_questions": subs, "grade": grade_, "detail": detail,
+                "elapsed_ms": elapsed_ms, "est_calls": est_calls,
+                "expect": item["expect"], "category": item["category"],
+                "must_contain": item.get("must_contain", []),
             }, ensure_ascii=False) + "\n")
 
             if i < len(items):
@@ -168,8 +208,15 @@ def main() -> None:
         c[1] += 1
     for cat, (p, t) in by_cat.items():
         print(f"  {cat}: {p}/{t}")
+    avg_ms = sum(r["耗时ms"] for r in rows) / max(len(rows), 1)
+    total_calls = sum(r["模型调用(估)"] for r in rows)
+    slowest = max(rows, key=lambda r: r["耗时ms"])
+    print(f"\n耗时：平均 {avg_ms / 1000:.1f}s/题，最慢 {slowest['id']} {slowest['耗时ms'] / 1000:.1f}s")
+    print(f"模型调用：约 {total_calls} 次（估算 = 子问题回答数 + 拆分调用）")
+    print(f"top_k: {args.top_k}")
     print(f"\nCSV: {csv_path}")
     print(f"原始记录: {raw_path}")
+    print("\n下一步可生成 HTML 报告：.\\\\.venv\\\\Scripts\\\\python.exe scripts\\\\make_report.py")
     sys.exit(2 if errors else 0)
 
 

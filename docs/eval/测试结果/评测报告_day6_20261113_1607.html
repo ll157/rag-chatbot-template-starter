@@ -1,0 +1,1239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<title>RAG 评测报告 20261113_1608</title>
+<style>
+  body { font-family: "Microsoft YaHei", "PingFang SC", sans-serif; margin: 0; background: #f1f5f9; color: #0f172a; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 28px 20px 60px; }
+  h1 { font-size: 24px; margin: 0 0 6px; }
+  .sub { color: #64748b; font-size: 13px; margin-bottom: 18px; }
+  .summary { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 24px; }
+  .stat { background: #fff; border-radius: 10px; padding: 12px 18px; box-shadow: 0 1px 3px rgba(15,23,42,.08); min-width: 120px; }
+  .stat-num { font-size: 22px; font-weight: 700; color: #1d4ed8; }
+  .stat-label { font-size: 12px; color: #64748b; }
+  .card { background: #fff; border-radius: 12px; padding: 16px 18px; margin-bottom: 16px; box-shadow: 0 1px 4px rgba(15,23,42,.08); }
+  .card-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .qid { font-weight: 700; font-size: 16px; }
+  .cat { background: #e0e7ff; color: #3730a3; border-radius: 6px; padding: 2px 8px; font-size: 12px; }
+  .badge { color: #fff; border-radius: 6px; padding: 2px 10px; font-size: 12px; font-weight: 700; }
+  .meta { margin-left: auto; color: #64748b; font-size: 12px; }
+  .question { font-size: 15px; font-weight: 600; margin: 10px 0 12px; }
+  .cols { display: flex; gap: 14px; flex-wrap: wrap; }
+  .col { flex: 1 1 320px; background: #f8fafc; border-radius: 8px; padding: 10px 12px; }
+  .col-title { font-size: 12px; color: #64748b; margin-bottom: 6px; font-weight: 700; }
+  .expect { font-size: 13px; margin-bottom: 8px; }
+  .kwbox { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }
+  .kw { background: #dbeafe; color: #1e40af; border-radius: 4px; padding: 1px 7px; font-size: 12px; }
+  .detail { font-size: 12px; color: #475569; }
+  .answer { font-size: 13px; line-height: 1.7; white-space: normal; }
+  .subs { margin-top: 8px; font-size: 12px; color: #1d4ed8; background: #eff6ff; border-radius: 6px; padding: 6px 8px; }
+  .source { border-top: 1px dashed #cbd5e1; padding: 8px 0; }
+  .source-head { font-size: 12px; font-weight: 700; color: #334155; }
+  .source-text { font-size: 12px; color: #475569; margin-top: 3px; line-height: 1.6; }
+  .none { font-size: 12px; color: #94a3b8; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>RAG 产品咨询助手 · 评测报告</h1>
+  <div class="sub">数据来源：原始记录_day6_20261113_1607.jsonl ｜ 生成时间：20261113_1608 ｜ 平均耗时 2.1s/题 ｜ 模型调用约 22 次</div>
+  <div class="summary">
+    <div class="stat"><div class="stat-num">18/18</div><div class="stat-label">总分</div></div>
+    <div class="stat"><div class="stat-num">0</div><div class="stat-label">请求错误</div></div>
+    <div class="stat"><div class="stat-num">4/4</div><div class="stat-label">直接查找</div></div><div class="stat"><div class="stat-num">5/5</div><div class="stat-label">跨文档综合</div></div><div class="stat"><div class="stat-num">4/4</div><div class="stat-label">型号/版本混淆</div></div><div class="stat"><div class="stat-num">5/5</div><div class="stat-label">无答案/冲突</div></div>
+  </div>
+  
+    <div class="card" style="border-left:6px solid #16a34a;background:#f0fdf4">
+      <div class="card-head">
+        <span class="qid">D-01</span>
+        <span class="cat">直接查找</span>
+        <span class="badge" style="background:#16a34a">PASS</span>
+        <span class="meta">1283 ms · 调用≈1 次</span>
+      </div>
+      <div class="question">问：A200 的整机保修期是多久？</div>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">预期（判分标准）</div>
+          <div class="expect">应含关键词</div>
+          <div class="kwbox"><span class="kw">24个月</span></div>
+          <div class="detail">判定说明：包含全部关键词</div>
+        </div>
+        <div class="col">
+          <div class="col-title">实际（AI 回答）</div>
+          <div class="answer">A200 整机保修期为 **24 个月**；核心部件（电机）保修 **36 个月**。</div>
+          
+        </div>
+      </div>
+      <div class="col-title" style="margin-top:10px">引用原文（AI 实际用到的片段）</div>
+      <div class="source"><div class="source-head">📄 售后政策_通用.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风系列售后政策（通用版）
+版本：2025-06｜适用：A200、A200 Pro；A200 v1 相关条款见第 2 页历史条款。
+1. 保修期
+A200 与 A200 Pro：整机保修 24 个月；核心部件（电机）保修 36 个月。
+滤芯等耗材不在保修范围。保修细则以各机型随机说明书为准；如宣传材料与说明书不一致，
+以说明书为准。…</div></div><div class="source"><div class="source-head">📄 售后政策_通用.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+2. A200 v1 历史条款
+A200 v1 已于 2024 年 6 月停止售后，保修期为整机 12 个月（早已届满，仅作存档说明）。
+3. 售后流程
+拨打服务热线 400-XXX-XXXX（虚构号码），提供购买凭证与机身编号，按指引寄送或上门。
+处理时限：收到机器后 15 个工作日。
+4. 相关文档
+参见《A200_用户手册_v3》第2页。参见《A200Pro_用户手册_v1》第2页。参见《A200v1_用户手
+册_旧版》第2页。…</div></div><div class="source"><div class="source-head">📄 A200Pro_用户手册_v1.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+4. 滤芯说明
+A200 Pro 专用 F-20 滤芯，更换周期 8 个月。F-20 与 A200、A200 v1 使用的 F-10
+不通用，请勿混装。对照参见《滤芯选购指南_2025》第1页。
+5. 滤芯更换方法
+步骤与 A200 类似，参见《A200_用户手册_v3》第3页。但 A200 Pro 滤芯仓为顶部开启式，与
+A200 底部开启式不同。…</div></div><div class="source"><div class="source-head">📄 常见问题FAQ_客服内部版.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+常见问题 FAQ（客服内部版，请勿外发）
+维护：客服组｜更新：2025-11。本 FAQ 供客服话术参考，与正式文档不一致时以说明书为准。
+1. 保修类
+Q：A200 到底保多久？A：整机 24 个月，电机 36 个月。若客户提到宣传页写 36
+个月，请解释以说明书 24 个月为准，并道歉（见《售后政策_通用》第 1 页）。
+Q：A200 Pro 和 A200 保修一样吗？A：一样，均为整机 24 个月。A200 v1 老机型不同，为 12
+个月（已停售）。
+2. 滤芯类
+Q：F-10 能装到 Pro…</div></div>
+    </div>
+    
+
+    <div class="card" style="border-left:6px solid #16a34a;background:#f0fdf4">
+      <div class="card-head">
+        <span class="qid">D-02</span>
+        <span class="cat">直接查找</span>
+        <span class="badge" style="background:#16a34a">PASS</span>
+        <span class="meta">1356 ms · 调用≈1 次</span>
+      </div>
+      <div class="question">问：A200 睡眠档运行噪音是多少？</div>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">预期（判分标准）</div>
+          <div class="expect">应含关键词</div>
+          <div class="kwbox"><span class="kw">32</span></div>
+          <div class="detail">判定说明：包含全部关键词</div>
+        </div>
+        <div class="col">
+          <div class="col-title">实际（AI 回答）</div>
+          <div class="answer">A200 睡眠档运行噪音为 **32 dB**（以 v3 手册为准）。</div>
+          
+        </div>
+      </div>
+      <div class="col-title" style="margin-top:10px">引用原文（AI 实际用到的片段）</div>
+      <div class="source"><div class="source-head">📄 A200_用户手册_v3.pdf · 第 4 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 4 页
+附录：常见误操作
+误将 F-20 装入 A200：滤芯仓无法完全闭合，机器不启动。请核对滤芯型号。
+夜间睡眠档噪音参考值见第 2 页参数表。如需更安静机型，请了解 A200 Pro。…</div></div><div class="source"><div class="source-head">📄 A200v1_用户手册_旧版.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+3. 技术参数
+ 项目
+参数
+额定功率
+45 W
+适用面积
+20–40 ㎡
+运行噪音（睡眠档）
+35 dB
+适用滤芯型号
+F-10
+滤芯更换周期
+6 个月
+上市年份
+2022
+4. 滤芯说明
+A200 v1 使用 F-10 滤芯，与现售 A200
+同型号，仍可通过正常渠道购买（见《滤芯选购指南_2025》第 1 页）。
+特别注意：F-10 不适用于 A200 Pro（Pro 使用 F-20）。…</div></div><div class="source"><div class="source-head">📄 A200_用户手册_v3.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+3. 技术参数
+ 项目
+参数
+额定功率
+45 W
+适用面积
+20–40 ㎡
+运行噪音（睡眠档）
+32 dB
+适用滤芯型号
+F-10
+滤芯更换周期
+6 个月
+上市年份
+2025
+4. 滤芯更换方法
+断电后打开底部滤芯仓，取出旧滤芯，装入新滤芯并复位。选购建议参见《滤芯选购指南_2025
+》第2页。
+A200 使用 F-10 滤芯；该滤芯同时适配停产机型 A200
+v1（见《A200v1_用户手册_旧版》）。A200 Pro 需使用 F-20 滤芯，两者不可混用。…</div></div><div class="source"><div class="source-head">📄 产品勘误与版本说明_2026Q3.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+产品勘误与版本说明（2026 年第 3 季度）
+本文汇总历史勘误，供客服与维修网点查阅。
+1. 勘误记录
+E-01：《A200_用户手册》v2 版第 2 页噪音参数曾误印为 35dB，v3 已更正为 32dB。以 v3 为准。
+E-02：部分早期宣传物料将 A200 整机保修表述为 36 个月，实为 24 个月（电机 36
+个月），详见《售后政策_通用》。此问题已在新版宣传物料中修正，旧物料可能仍在流通。
+2. 版本现状
+A200_用户手册：现行为 v3（2025-08）。A200Pro_用户手册：现…</div></div>
+    </div>
+    
+
+    <div class="card" style="border-left:6px solid #16a34a;background:#f0fdf4">
+      <div class="card-head">
+        <span class="qid">D-03</span>
+        <span class="cat">直接查找</span>
+        <span class="badge" style="background:#16a34a">PASS</span>
+        <span class="meta">1751 ms · 调用≈1 次</span>
+      </div>
+      <div class="question">问：A200 的包装清单里有哪些东西？</div>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">预期（判分标准）</div>
+          <div class="expect">应含关键词</div>
+          <div class="kwbox"><span class="kw">主机</span><span class="kw">F-10</span><span class="kw">电源线</span><span class="kw">说明书</span></div>
+          <div class="detail">判定说明：包含全部关键词</div>
+        </div>
+        <div class="col">
+          <div class="col-title">实际（AI 回答）</div>
+          <div class="answer">A200 包装清单：主机×1、F-10 滤芯×1、电源线×1、说明书×1。</div>
+          
+        </div>
+      </div>
+      <div class="col-title" style="margin-top:10px">引用原文（AI 实际用到的片段）</div>
+      <div class="source"><div class="source-head">📄 快速安装指南_A200系列.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风 A200 系列 · 快速安装指南
+适用：A200、A200 Pro（v1 老机型请参照旧版手册）。
+1. 开箱核对：按各机型包装清单核对（清单明细见《A200_用户手册_v3》第 1
+页、《A200Pro_用户手册_v1》第 1 页）。
+2. 撕除滤芯包装膜，装入滤芯仓（A200 底部仓，Pro 顶部仓）。
+3. 接通电源，开机自检约 10 秒。
+4. 摆放：离墙 30cm 以上，适用面积参考各机型参数页。
+【注意】滤芯型号装错会导致无法开机：A200/v1 用 F-10，Pro 用 F-20（…</div></div><div class="source"><div class="source-head">📄 A200_用户手册_v3.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风 A200 空气净化器 用户手册（第 3 版）
+适用型号：A200｜版本：v3｜发布：2025-08。本手册替代 v2
+及更早版本（差异见《产品勘误与版本说明_2026Q3》）。
+1. 产品概述
+A200 为家用空气净化器基础款，2025 年上市，适合 20–40 ㎡ 房间。包装清单：主机×1、F-10
+滤芯×1、电源线×1、说明书×1。
+2. 保修信息
+A200 整机保修 24 个月（自购买之日起，凭有效购买凭证）。核心部件（电机）保修 36
+个月。售后流程与热线见《售后政策_通用》。
+滤芯属于…</div></div><div class="source"><div class="source-head">📄 A200Pro_用户手册_v1.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风 A200 Pro 空气净化器 用户手册（第 1 版）
+适用型号：A200 Pro｜版本：v1｜发布：2025-09。
+1. 产品概述
+A200 Pro 为高配款，2025 年上市，适合 35–60 ㎡ 房间。包装清单：主机×1、F-20
+滤芯×1、电源线×1、遥控器×1、说明书×1。
+2. 保修信息
+A200 Pro 整机保修 24 个月，核心部件（电机）保修 36 个月，与 A200
+相同（见《售后政策_通用》）。
+3. 技术参数
+ 项目
+参数
+额定功率
+65 W
+适用面积
+35–60 ㎡
+运…</div></div><div class="source"><div class="source-head">📄 滤芯选购指南_2025.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+2. 更换方法要点
+A200、A200 v1 为底部滤芯仓；A200 Pro 为顶部开启式。详细步骤参见《A200_用户手册_v3》第3
+页。参见《A200Pro_用户手册_v1》第5页。
+3. 常见问题
+Q：A200 Pro 能否使用 F-10？A：不能。F-10 与 F-20
+尺寸与卡扣不同，强行安装会损坏卡扣（见《A200Pro_用户手册_v1》第 4 页）。
+Q：其他品牌滤芯是否兼容？A：本指南不讨论其他品牌兼容性，仅保证原厂滤芯匹配。
+Q：A200 与 A200 v1 是否用同一种滤芯？A：…</div></div>
+    </div>
+    
+
+    <div class="card" style="border-left:6px solid #16a34a;background:#f0fdf4">
+      <div class="card-head">
+        <span class="qid">D-04</span>
+        <span class="cat">直接查找</span>
+        <span class="badge" style="background:#16a34a">PASS</span>
+        <span class="meta">1159 ms · 调用≈1 次</span>
+      </div>
+      <div class="question">问：A200 Pro 适合多大的房间？</div>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">预期（判分标准）</div>
+          <div class="expect">应含关键词</div>
+          <div class="kwbox"><span class="kw">35</span><span class="kw">60</span></div>
+          <div class="detail">判定说明：包含全部关键词</div>
+        </div>
+        <div class="col">
+          <div class="col-title">实际（AI 回答）</div>
+          <div class="answer">A200 Pro 适合 **35–60 ㎡** 的房间。</div>
+          
+        </div>
+      </div>
+      <div class="col-title" style="margin-top:10px">引用原文（AI 实际用到的片段）</div>
+      <div class="source"><div class="source-head">📄 A200Pro_用户手册_v1.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风 A200 Pro 空气净化器 用户手册（第 1 版）
+适用型号：A200 Pro｜版本：v1｜发布：2025-09。
+1. 产品概述
+A200 Pro 为高配款，2025 年上市，适合 35–60 ㎡ 房间。包装清单：主机×1、F-20
+滤芯×1、电源线×1、遥控器×1、说明书×1。
+2. 保修信息
+A200 Pro 整机保修 24 个月，核心部件（电机）保修 36 个月，与 A200
+相同（见《售后政策_通用》）。
+3. 技术参数
+ 项目
+参数
+额定功率
+65 W
+适用面积
+35–60 ㎡
+运…</div></div><div class="source"><div class="source-head">📄 常见问题FAQ_客服内部版.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+3. 参数类
+Q：A200 睡眠档多吵？A：32dB。客户若问出风量、CADR
+值，本资料未提供该参数，请引导查看说明书或记录反馈。
+Q：Pro 更省电吗？A：Pro 功率 65W 高于 A200 的 45W，但适用面积更大，按面积算效率更高。
+4. 兼容性
+Q：第三方滤芯能用吗？A：资料未涉及其他品牌兼容性，仅承诺原厂滤芯（见《滤芯选购指南
+_2025》第 2 页）。…</div></div><div class="source"><div class="source-head">📄 A200_用户手册_v3.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风 A200 空气净化器 用户手册（第 3 版）
+适用型号：A200｜版本：v3｜发布：2025-08。本手册替代 v2
+及更早版本（差异见《产品勘误与版本说明_2026Q3》）。
+1. 产品概述
+A200 为家用空气净化器基础款，2025 年上市，适合 20–40 ㎡ 房间。包装清单：主机×1、F-10
+滤芯×1、电源线×1、说明书×1。
+2. 保修信息
+A200 整机保修 24 个月（自购买之日起，凭有效购买凭证）。核心部件（电机）保修 36
+个月。售后流程与热线见《售后政策_通用》。
+滤芯属于…</div></div><div class="source"><div class="source-head">📄 滤芯选购指南_2025.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+2. 更换方法要点
+A200、A200 v1 为底部滤芯仓；A200 Pro 为顶部开启式。详细步骤参见《A200_用户手册_v3》第3
+页。参见《A200Pro_用户手册_v1》第5页。
+3. 常见问题
+Q：A200 Pro 能否使用 F-10？A：不能。F-10 与 F-20
+尺寸与卡扣不同，强行安装会损坏卡扣（见《A200Pro_用户手册_v1》第 4 页）。
+Q：其他品牌滤芯是否兼容？A：本指南不讨论其他品牌兼容性，仅保证原厂滤芯匹配。
+Q：A200 与 A200 v1 是否用同一种滤芯？A：…</div></div>
+    </div>
+    
+
+    <div class="card" style="border-left:6px solid #16a34a;background:#f0fdf4">
+      <div class="card-head">
+        <span class="qid">D-05</span>
+        <span class="cat">跨文档综合</span>
+        <span class="badge" style="background:#16a34a">PASS</span>
+        <span class="meta">967 ms · 调用≈1 次</span>
+      </div>
+      <div class="question">问：A200 和 A200 Pro 的整机保修一样吗？</div>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">预期（判分标准）</div>
+          <div class="expect">应含关键词</div>
+          <div class="kwbox"><span class="kw">24</span></div>
+          <div class="detail">判定说明：包含全部关键词</div>
+        </div>
+        <div class="col">
+          <div class="col-title">实际（AI 回答）</div>
+          <div class="answer">一样。A200 和 A200 Pro 的整机保修均为 **24 个月**。</div>
+          
+        </div>
+      </div>
+      <div class="col-title" style="margin-top:10px">引用原文（AI 实际用到的片段）</div>
+      <div class="source"><div class="source-head">📄 A200Pro_用户手册_v1.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+4. 滤芯说明
+A200 Pro 专用 F-20 滤芯，更换周期 8 个月。F-20 与 A200、A200 v1 使用的 F-10
+不通用，请勿混装。对照参见《滤芯选购指南_2025》第1页。
+5. 滤芯更换方法
+步骤与 A200 类似，参见《A200_用户手册_v3》第3页。但 A200 Pro 滤芯仓为顶部开启式，与
+A200 底部开启式不同。…</div></div><div class="source"><div class="source-head">📄 滤芯选购指南_2025.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+2. 更换方法要点
+A200、A200 v1 为底部滤芯仓；A200 Pro 为顶部开启式。详细步骤参见《A200_用户手册_v3》第3
+页。参见《A200Pro_用户手册_v1》第5页。
+3. 常见问题
+Q：A200 Pro 能否使用 F-10？A：不能。F-10 与 F-20
+尺寸与卡扣不同，强行安装会损坏卡扣（见《A200Pro_用户手册_v1》第 4 页）。
+Q：其他品牌滤芯是否兼容？A：本指南不讨论其他品牌兼容性，仅保证原厂滤芯匹配。
+Q：A200 与 A200 v1 是否用同一种滤芯？A：…</div></div><div class="source"><div class="source-head">📄 售后政策_通用.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风系列售后政策（通用版）
+版本：2025-06｜适用：A200、A200 Pro；A200 v1 相关条款见第 2 页历史条款。
+1. 保修期
+A200 与 A200 Pro：整机保修 24 个月；核心部件（电机）保修 36 个月。
+滤芯等耗材不在保修范围。保修细则以各机型随机说明书为准；如宣传材料与说明书不一致，
+以说明书为准。…</div></div><div class="source"><div class="source-head">📄 A200v1_用户手册_旧版.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风 A200 v1 空气净化器 用户手册（旧版存档）
+适用型号：A200 v1｜版本：v2｜发布：2022-05。
+【注意】停产声明：A200 v1 已于 2024 年 6 月停止生产与售后。仍有购机需求的用户建议选择现售的 A200
+或 A200 Pro。
+1. 产品概述
+A200 v1 为 A200 系列初代机型，2022 年上市，适合 20–40 ㎡。包装清单：主机×1、F-10
+滤芯×1、电源线×1、说明书×1（无遥控器）。
+2. 保修信息（历史存档）
+A200 v1 整机保修 12 个月，…</div></div>
+    </div>
+    
+
+    <div class="card" style="border-left:6px solid #16a34a;background:#f0fdf4">
+      <div class="card-head">
+        <span class="qid">D-06</span>
+        <span class="cat">跨文档综合</span>
+        <span class="badge" style="background:#16a34a">PASS</span>
+        <span class="meta">1293 ms · 调用≈1 次</span>
+      </div>
+      <div class="question">问：F-10 滤芯能装到 A200 Pro 上吗？</div>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">预期（判分标准）</div>
+          <div class="expect">应含关键词</div>
+          <div class="kwbox"><span class="kw">F-20</span></div>
+          <div class="detail">判定说明：包含全部关键词</div>
+        </div>
+        <div class="col">
+          <div class="col-title">实际（AI 回答）</div>
+          <div class="answer">不能。A200 Pro 需使用 F-20 滤芯；F-10 与 F-20 尺寸和卡扣不同，强行安装会损坏卡扣。</div>
+          
+        </div>
+      </div>
+      <div class="col-title" style="margin-top:10px">引用原文（AI 实际用到的片段）</div>
+      <div class="source"><div class="source-head">📄 A200Pro_用户手册_v1.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+4. 滤芯说明
+A200 Pro 专用 F-20 滤芯，更换周期 8 个月。F-20 与 A200、A200 v1 使用的 F-10
+不通用，请勿混装。对照参见《滤芯选购指南_2025》第1页。
+5. 滤芯更换方法
+步骤与 A200 类似，参见《A200_用户手册_v3》第3页。但 A200 Pro 滤芯仓为顶部开启式，与
+A200 底部开启式不同。…</div></div><div class="source"><div class="source-head">📄 滤芯选购指南_2025.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+2. 更换方法要点
+A200、A200 v1 为底部滤芯仓；A200 Pro 为顶部开启式。详细步骤参见《A200_用户手册_v3》第3
+页。参见《A200Pro_用户手册_v1》第5页。
+3. 常见问题
+Q：A200 Pro 能否使用 F-10？A：不能。F-10 与 F-20
+尺寸与卡扣不同，强行安装会损坏卡扣（见《A200Pro_用户手册_v1》第 4 页）。
+Q：其他品牌滤芯是否兼容？A：本指南不讨论其他品牌兼容性，仅保证原厂滤芯匹配。
+Q：A200 与 A200 v1 是否用同一种滤芯？A：…</div></div><div class="source"><div class="source-head">📄 A200v1_用户手册_旧版.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+3. 技术参数
+ 项目
+参数
+额定功率
+45 W
+适用面积
+20–40 ㎡
+运行噪音（睡眠档）
+35 dB
+适用滤芯型号
+F-10
+滤芯更换周期
+6 个月
+上市年份
+2022
+4. 滤芯说明
+A200 v1 使用 F-10 滤芯，与现售 A200
+同型号，仍可通过正常渠道购买（见《滤芯选购指南_2025》第 1 页）。
+特别注意：F-10 不适用于 A200 Pro（Pro 使用 F-20）。…</div></div><div class="source"><div class="source-head">📄 滤芯选购指南_2025.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风系列滤芯选购指南（2025 年版）
+适用品牌：净风全系。本文为选购建议，具体参数以各机型说明书为准。
+1. 滤芯型号对照
+ 滤芯型号
+适配机型
+更换周期
+备注
+F-10
+A200、A200 v1（停产）
+6 个月
+现售，供货充足
+F-20
+A200 Pro
+8 个月
+仅适配 Pro，容量更大
+以上对照与各机型说明书一致；如发现不一致，以说明书为准并反馈客服。…</div></div>
+    </div>
+    
+
+    <div class="card" style="border-left:6px solid #16a34a;background:#f0fdf4">
+      <div class="card-head">
+        <span class="qid">D-07</span>
+        <span class="cat">跨文档综合</span>
+        <span class="badge" style="background:#16a34a">PASS</span>
+        <span class="meta">1832 ms · 调用≈1 次</span>
+      </div>
+      <div class="question">问：A200 v1 停产了，还能买到它的滤芯吗？</div>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">预期（判分标准）</div>
+          <div class="expect">应含关键词</div>
+          <div class="kwbox"><span class="kw">F-10</span></div>
+          <div class="detail">判定说明：包含全部关键词</div>
+        </div>
+        <div class="col">
+          <div class="col-title">实际（AI 回答）</div>
+          <div class="answer">可以。资料显示 A200 v1 使用 **F-10 滤芯**，且 F-10 为“现售，供货充足”。虽然 A200 v1 已停产并停止售后，但其滤芯型号仍可购买。</div>
+          
+        </div>
+      </div>
+      <div class="col-title" style="margin-top:10px">引用原文（AI 实际用到的片段）</div>
+      <div class="source"><div class="source-head">📄 A200Pro_用户手册_v1.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+4. 滤芯说明
+A200 Pro 专用 F-20 滤芯，更换周期 8 个月。F-20 与 A200、A200 v1 使用的 F-10
+不通用，请勿混装。对照参见《滤芯选购指南_2025》第1页。
+5. 滤芯更换方法
+步骤与 A200 类似，参见《A200_用户手册_v3》第3页。但 A200 Pro 滤芯仓为顶部开启式，与
+A200 底部开启式不同。…</div></div><div class="source"><div class="source-head">📄 A200v1_用户手册_旧版.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风 A200 v1 空气净化器 用户手册（旧版存档）
+适用型号：A200 v1｜版本：v2｜发布：2022-05。
+【注意】停产声明：A200 v1 已于 2024 年 6 月停止生产与售后。仍有购机需求的用户建议选择现售的 A200
+或 A200 Pro。
+1. 产品概述
+A200 v1 为 A200 系列初代机型，2022 年上市，适合 20–40 ㎡。包装清单：主机×1、F-10
+滤芯×1、电源线×1、说明书×1（无遥控器）。
+2. 保修信息（历史存档）
+A200 v1 整机保修 12 个月，…</div></div><div class="source"><div class="source-head">📄 滤芯选购指南_2025.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+2. 更换方法要点
+A200、A200 v1 为底部滤芯仓；A200 Pro 为顶部开启式。详细步骤参见《A200_用户手册_v3》第3
+页。参见《A200Pro_用户手册_v1》第5页。
+3. 常见问题
+Q：A200 Pro 能否使用 F-10？A：不能。F-10 与 F-20
+尺寸与卡扣不同，强行安装会损坏卡扣（见《A200Pro_用户手册_v1》第 4 页）。
+Q：其他品牌滤芯是否兼容？A：本指南不讨论其他品牌兼容性，仅保证原厂滤芯匹配。
+Q：A200 与 A200 v1 是否用同一种滤芯？A：…</div></div><div class="source"><div class="source-head">📄 滤芯选购指南_2025.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风系列滤芯选购指南（2025 年版）
+适用品牌：净风全系。本文为选购建议，具体参数以各机型说明书为准。
+1. 滤芯型号对照
+ 滤芯型号
+适配机型
+更换周期
+备注
+F-10
+A200、A200 v1（停产）
+6 个月
+现售，供货充足
+F-20
+A200 Pro
+8 个月
+仅适配 Pro，容量更大
+以上对照与各机型说明书一致；如发现不一致，以说明书为准并反馈客服。…</div></div>
+    </div>
+    
+
+    <div class="card" style="border-left:6px solid #16a34a;background:#f0fdf4">
+      <div class="card-head">
+        <span class="qid">D-08</span>
+        <span class="cat">跨文档综合</span>
+        <span class="badge" style="background:#16a34a">PASS</span>
+        <span class="meta">8636 ms · 调用≈3 次</span>
+      </div>
+      <div class="question">问：A200 和 Pro 的滤芯仓在哪里？怎么换？</div>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">预期（判分标准）</div>
+          <div class="expect">应含关键词</div>
+          <div class="kwbox"><span class="kw">底部</span><span class="kw">顶部</span></div>
+          <div class="detail">判定说明：包含全部关键词</div>
+        </div>
+        <div class="col">
+          <div class="col-title">实际（AI 回答）</div>
+          <div class="answer">你的问题包含 2 个子问题，逐一回答如下：<br><br>【子问题 1】A200 和 Pro 的滤芯仓分别在哪里？<br>A200 的滤芯仓在底部；A200 Pro 的滤芯仓为顶部开启式。<br>（依据：A200Pro_用户手册_v1.pdf 第2页；滤芯选购指南_2025.pdf 第2页）<br><br>【子问题 2】A200 和 Pro 的滤芯怎么更换？<br>文档没有提供完整的逐步更换步骤，只说明：<br><br>- **A200 / A200 v1**：滤芯仓为**底部开启式**。<br>- **A200 Pro**：滤芯仓为**顶部开启式**，步骤与 A200 类似。<br>- 详细步骤均指向《A200_用户手册_v3》第3页，但该页内容未在提供的上下文中，因此无法给出具体操作<br>（依据：A200Pro_用户手册_v1.pdf 第2页；滤芯选购指南_2025.pdf 第2页）</div>
+          <div class="subs">🔀 拆分：A200 和 Pro 的滤芯仓分别在哪里？ ／ A200 和 Pro 的滤芯怎么更换？</div>
+        </div>
+      </div>
+      <div class="col-title" style="margin-top:10px">引用原文（AI 实际用到的片段）</div>
+      <div class="source"><div class="source-head">📄 A200Pro_用户手册_v1.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+4. 滤芯说明
+A200 Pro 专用 F-20 滤芯，更换周期 8 个月。F-20 与 A200、A200 v1 使用的 F-10
+不通用，请勿混装。对照参见《滤芯选购指南_2025》第1页。
+5. 滤芯更换方法
+步骤与 A200 类似，参见《A200_用户手册_v3》第3页。但 A200 Pro 滤芯仓为顶部开启式，与
+A200 底部开启式不同。…</div></div><div class="source"><div class="source-head">📄 滤芯选购指南_2025.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+2. 更换方法要点
+A200、A200 v1 为底部滤芯仓；A200 Pro 为顶部开启式。详细步骤参见《A200_用户手册_v3》第3
+页。参见《A200Pro_用户手册_v1》第5页。
+3. 常见问题
+Q：A200 Pro 能否使用 F-10？A：不能。F-10 与 F-20
+尺寸与卡扣不同，强行安装会损坏卡扣（见《A200Pro_用户手册_v1》第 4 页）。
+Q：其他品牌滤芯是否兼容？A：本指南不讨论其他品牌兼容性，仅保证原厂滤芯匹配。
+Q：A200 与 A200 v1 是否用同一种滤芯？A：…</div></div><div class="source"><div class="source-head">📄 A200Pro_用户手册_v1.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风 A200 Pro 空气净化器 用户手册（第 1 版）
+适用型号：A200 Pro｜版本：v1｜发布：2025-09。
+1. 产品概述
+A200 Pro 为高配款，2025 年上市，适合 35–60 ㎡ 房间。包装清单：主机×1、F-20
+滤芯×1、电源线×1、遥控器×1、说明书×1。
+2. 保修信息
+A200 Pro 整机保修 24 个月，核心部件（电机）保修 36 个月，与 A200
+相同（见《售后政策_通用》）。
+3. 技术参数
+ 项目
+参数
+额定功率
+65 W
+适用面积
+35–60 ㎡
+运…</div></div><div class="source"><div class="source-head">📄 A200v1_用户手册_旧版.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+3. 技术参数
+ 项目
+参数
+额定功率
+45 W
+适用面积
+20–40 ㎡
+运行噪音（睡眠档）
+35 dB
+适用滤芯型号
+F-10
+滤芯更换周期
+6 个月
+上市年份
+2022
+4. 滤芯说明
+A200 v1 使用 F-10 滤芯，与现售 A200
+同型号，仍可通过正常渠道购买（见《滤芯选购指南_2025》第 1 页）。
+特别注意：F-10 不适用于 A200 Pro（Pro 使用 F-20）。…</div></div><div class="source"><div class="source-head">📄 滤芯选购指南_2025.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风系列滤芯选购指南（2025 年版）
+适用品牌：净风全系。本文为选购建议，具体参数以各机型说明书为准。
+1. 滤芯型号对照
+ 滤芯型号
+适配机型
+更换周期
+备注
+F-10
+A200、A200 v1（停产）
+6 个月
+现售，供货充足
+F-20
+A200 Pro
+8 个月
+仅适配 Pro，容量更大
+以上对照与各机型说明书一致；如发现不一致，以说明书为准并反馈客服。…</div></div>
+    </div>
+    
+
+    <div class="card" style="border-left:6px solid #16a34a;background:#f0fdf4">
+      <div class="card-head">
+        <span class="qid">D-09</span>
+        <span class="cat">跨文档综合</span>
+        <span class="badge" style="background:#16a34a">PASS</span>
+        <span class="meta">1473 ms · 调用≈1 次</span>
+      </div>
+      <div class="question">问：售后服务流程和热线是什么？</div>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">预期（判分标准）</div>
+          <div class="expect">应含关键词</div>
+          <div class="kwbox"><span class="kw">400</span><span class="kw">15</span></div>
+          <div class="detail">判定说明：包含全部关键词</div>
+        </div>
+        <div class="col">
+          <div class="col-title">实际（AI 回答）</div>
+          <div class="answer">售后服务热线：400-XXX-XXXX（虚构号码）。<br><br>流程：拨打服务热线，提供购买凭证与机身编号，按指引寄送或上门；处理时限为收到机器后 15 个工作日。</div>
+          
+        </div>
+      </div>
+      <div class="col-title" style="margin-top:10px">引用原文（AI 实际用到的片段）</div>
+      <div class="source"><div class="source-head">📄 A200_促销宣传单页.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风 A200 · 年度焕新特惠！
+全屋净呼吸，从净风 A200 开始！基础款也有旗舰级安心保障——整机保修长达 36 个月！
+睡眠档低至 32dB，45W 节能动力，20–40 ㎡ 全屋适用，F-10 滤芯全年仅需更换两次。
+买 A200 送一年滤芯优惠券！活动门店详见当地海报。
+【注意】宣传页与说明书如有出入，以《A200_用户手册_v3》与《售后政策_通用》为准。
+了解高配款：A200 Pro 适合 35–60 ㎡ 大空间，28dB
+更安静（详见《A200Pro_用户手册_v1》）。…</div></div><div class="source"><div class="source-head">📄 售后政策_通用.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+2. A200 v1 历史条款
+A200 v1 已于 2024 年 6 月停止售后，保修期为整机 12 个月（早已届满，仅作存档说明）。
+3. 售后流程
+拨打服务热线 400-XXX-XXXX（虚构号码），提供购买凭证与机身编号，按指引寄送或上门。
+处理时限：收到机器后 15 个工作日。
+4. 相关文档
+参见《A200_用户手册_v3》第2页。参见《A200Pro_用户手册_v1》第2页。参见《A200v1_用户手
+册_旧版》第2页。…</div></div><div class="source"><div class="source-head">📄 常见问题FAQ_客服内部版.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+3. 参数类
+Q：A200 睡眠档多吵？A：32dB。客户若问出风量、CADR
+值，本资料未提供该参数，请引导查看说明书或记录反馈。
+Q：Pro 更省电吗？A：Pro 功率 65W 高于 A200 的 45W，但适用面积更大，按面积算效率更高。
+4. 兼容性
+Q：第三方滤芯能用吗？A：资料未涉及其他品牌兼容性，仅承诺原厂滤芯（见《滤芯选购指南
+_2025》第 2 页）。…</div></div><div class="source"><div class="source-head">📄 A200_用户手册_v3.pdf · 第 3 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 3 页
+5. 安全注意事项
+请勿在浴室等高湿环境使用；请勿堵塞进出风口；儿童应在成人监护下使用。
+6. 认证信息
+本产品已通过 CCC 认证与 ROHS 检测（报告编号为内部编号，仅存档用途）。
+7. 相关文档
+参见《售后政策_通用》第1页。参见《滤芯选购指南_2025》第1页。参见《常见问题FAQ_客服
+内部版》第1页。…</div></div>
+    </div>
+    
+
+    <div class="card" style="border-left:6px solid #16a34a;background:#f0fdf4">
+      <div class="card-head">
+        <span class="qid">D-10</span>
+        <span class="cat">型号/版本混淆</span>
+        <span class="badge" style="background:#16a34a">PASS</span>
+        <span class="meta">1376 ms · 调用≈1 次</span>
+      </div>
+      <div class="question">问：A200 和 A200 v1 用同一种滤芯吗？</div>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">预期（判分标准）</div>
+          <div class="expect">应含关键词</div>
+          <div class="kwbox"><span class="kw">F-10</span></div>
+          <div class="detail">判定说明：包含全部关键词</div>
+        </div>
+        <div class="col">
+          <div class="col-title">实际（AI 回答）</div>
+          <div class="answer">是的。A200 和 A200 v1 均使用 **F-10 滤芯**；但两者的保修政策不同。</div>
+          
+        </div>
+      </div>
+      <div class="col-title" style="margin-top:10px">引用原文（AI 实际用到的片段）</div>
+      <div class="source"><div class="source-head">📄 A200Pro_用户手册_v1.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+4. 滤芯说明
+A200 Pro 专用 F-20 滤芯，更换周期 8 个月。F-20 与 A200、A200 v1 使用的 F-10
+不通用，请勿混装。对照参见《滤芯选购指南_2025》第1页。
+5. 滤芯更换方法
+步骤与 A200 类似，参见《A200_用户手册_v3》第3页。但 A200 Pro 滤芯仓为顶部开启式，与
+A200 底部开启式不同。…</div></div><div class="source"><div class="source-head">📄 滤芯选购指南_2025.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+2. 更换方法要点
+A200、A200 v1 为底部滤芯仓；A200 Pro 为顶部开启式。详细步骤参见《A200_用户手册_v3》第3
+页。参见《A200Pro_用户手册_v1》第5页。
+3. 常见问题
+Q：A200 Pro 能否使用 F-10？A：不能。F-10 与 F-20
+尺寸与卡扣不同，强行安装会损坏卡扣（见《A200Pro_用户手册_v1》第 4 页）。
+Q：其他品牌滤芯是否兼容？A：本指南不讨论其他品牌兼容性，仅保证原厂滤芯匹配。
+Q：A200 与 A200 v1 是否用同一种滤芯？A：…</div></div><div class="source"><div class="source-head">📄 A200v1_用户手册_旧版.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+3. 技术参数
+ 项目
+参数
+额定功率
+45 W
+适用面积
+20–40 ㎡
+运行噪音（睡眠档）
+35 dB
+适用滤芯型号
+F-10
+滤芯更换周期
+6 个月
+上市年份
+2022
+4. 滤芯说明
+A200 v1 使用 F-10 滤芯，与现售 A200
+同型号，仍可通过正常渠道购买（见《滤芯选购指南_2025》第 1 页）。
+特别注意：F-10 不适用于 A200 Pro（Pro 使用 F-20）。…</div></div><div class="source"><div class="source-head">📄 A200v1_用户手册_旧版.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风 A200 v1 空气净化器 用户手册（旧版存档）
+适用型号：A200 v1｜版本：v2｜发布：2022-05。
+【注意】停产声明：A200 v1 已于 2024 年 6 月停止生产与售后。仍有购机需求的用户建议选择现售的 A200
+或 A200 Pro。
+1. 产品概述
+A200 v1 为 A200 系列初代机型，2022 年上市，适合 20–40 ㎡。包装清单：主机×1、F-10
+滤芯×1、电源线×1、说明书×1（无遥控器）。
+2. 保修信息（历史存档）
+A200 v1 整机保修 12 个月，…</div></div>
+    </div>
+    
+
+    <div class="card" style="border-left:6px solid #16a34a;background:#f0fdf4">
+      <div class="card-head">
+        <span class="qid">D-11</span>
+        <span class="cat">型号/版本混淆</span>
+        <span class="badge" style="background:#16a34a">PASS</span>
+        <span class="meta">1438 ms · 调用≈1 次</span>
+      </div>
+      <div class="question">问：A200 v1 的整机保修是多久？</div>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">预期（判分标准）</div>
+          <div class="expect">应含关键词</div>
+          <div class="kwbox"><span class="kw">12</span></div>
+          <div class="detail">判定说明：包含全部关键词</div>
+        </div>
+        <div class="col">
+          <div class="col-title">实际（AI 回答）</div>
+          <div class="answer">A200 v1 的整机保修为 **12 个月**。该机型已于 2024 年 6 月停止售后，保修早已届满，仅为历史存档说明。</div>
+          
+        </div>
+      </div>
+      <div class="col-title" style="margin-top:10px">引用原文（AI 实际用到的片段）</div>
+      <div class="source"><div class="source-head">📄 售后政策_通用.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+2. A200 v1 历史条款
+A200 v1 已于 2024 年 6 月停止售后，保修期为整机 12 个月（早已届满，仅作存档说明）。
+3. 售后流程
+拨打服务热线 400-XXX-XXXX（虚构号码），提供购买凭证与机身编号，按指引寄送或上门。
+处理时限：收到机器后 15 个工作日。
+4. 相关文档
+参见《A200_用户手册_v3》第2页。参见《A200Pro_用户手册_v1》第2页。参见《A200v1_用户手
+册_旧版》第2页。…</div></div><div class="source"><div class="source-head">📄 售后政策_通用.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风系列售后政策（通用版）
+版本：2025-06｜适用：A200、A200 Pro；A200 v1 相关条款见第 2 页历史条款。
+1. 保修期
+A200 与 A200 Pro：整机保修 24 个月；核心部件（电机）保修 36 个月。
+滤芯等耗材不在保修范围。保修细则以各机型随机说明书为准；如宣传材料与说明书不一致，
+以说明书为准。…</div></div><div class="source"><div class="source-head">📄 A200v1_用户手册_旧版.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风 A200 v1 空气净化器 用户手册（旧版存档）
+适用型号：A200 v1｜版本：v2｜发布：2022-05。
+【注意】停产声明：A200 v1 已于 2024 年 6 月停止生产与售后。仍有购机需求的用户建议选择现售的 A200
+或 A200 Pro。
+1. 产品概述
+A200 v1 为 A200 系列初代机型，2022 年上市，适合 20–40 ㎡。包装清单：主机×1、F-10
+滤芯×1、电源线×1、说明书×1（无遥控器）。
+2. 保修信息（历史存档）
+A200 v1 整机保修 12 个月，…</div></div><div class="source"><div class="source-head">📄 A200Pro_用户手册_v1.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+4. 滤芯说明
+A200 Pro 专用 F-20 滤芯，更换周期 8 个月。F-20 与 A200、A200 v1 使用的 F-10
+不通用，请勿混装。对照参见《滤芯选购指南_2025》第1页。
+5. 滤芯更换方法
+步骤与 A200 类似，参见《A200_用户手册_v3》第3页。但 A200 Pro 滤芯仓为顶部开启式，与
+A200 底部开启式不同。…</div></div>
+    </div>
+    
+
+    <div class="card" style="border-left:6px solid #16a34a;background:#f0fdf4">
+      <div class="card-head">
+        <span class="qid">D-12</span>
+        <span class="cat">型号/版本混淆</span>
+        <span class="badge" style="background:#16a34a">PASS</span>
+        <span class="meta">4269 ms · 调用≈3 次</span>
+      </div>
+      <div class="question">问：A200 Pro 有遥控器吗？A200 呢？</div>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">预期（判分标准）</div>
+          <div class="expect">应含关键词</div>
+          <div class="kwbox"><span class="kw">遥控器</span></div>
+          <div class="detail">判定说明：包含全部关键词</div>
+        </div>
+        <div class="col">
+          <div class="col-title">实际（AI 回答）</div>
+          <div class="answer">你的问题包含 2 个子问题，逐一回答如下：<br><br>【子问题 1】A200 Pro 有遥控器吗？<br>有。A200 Pro 包装内含遥控器×1；长按遥控器风速键 5 秒，机身指示灯闪烁即配对成功。A200 则无遥控器，不支持遥控功能。<br>（依据：A200Pro_用户手册_v1.pdf 第3页；A200v1_用户手册_旧版.pdf 第1页）<br><br>【子问题 2】A200 有遥控器吗？<br>没有。A200 无遥控器，且不支持遥控功能；遥控器仅随 A200 Pro 附带。<br>（依据：A200Pro_用户手册_v1.pdf 第3页；A200v1_用户手册_旧版.pdf 第1页）</div>
+          <div class="subs">🔀 拆分：A200 Pro 有遥控器吗？ ／ A200 有遥控器吗？</div>
+        </div>
+      </div>
+      <div class="col-title" style="margin-top:10px">引用原文（AI 实际用到的片段）</div>
+      <div class="source"><div class="source-head">📄 A200Pro_用户手册_v1.pdf · 第 3 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 3 页
+6. 遥控器配对
+长按遥控器风速键 5 秒，机身指示灯闪烁即配对成功。遥控器仅随 A200 Pro 附带；A200
+无遥控器，不支持遥控功能。
+7. 相关文档
+参见《售后政策_通用》第2页。参见《滤芯选购指南_2025》第1页。…</div></div><div class="source"><div class="source-head">📄 A200v1_用户手册_旧版.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风 A200 v1 空气净化器 用户手册（旧版存档）
+适用型号：A200 v1｜版本：v2｜发布：2022-05。
+【注意】停产声明：A200 v1 已于 2024 年 6 月停止生产与售后。仍有购机需求的用户建议选择现售的 A200
+或 A200 Pro。
+1. 产品概述
+A200 v1 为 A200 系列初代机型，2022 年上市，适合 20–40 ㎡。包装清单：主机×1、F-10
+滤芯×1、电源线×1、说明书×1（无遥控器）。
+2. 保修信息（历史存档）
+A200 v1 整机保修 12 个月，…</div></div><div class="source"><div class="source-head">📄 A200Pro_用户手册_v1.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风 A200 Pro 空气净化器 用户手册（第 1 版）
+适用型号：A200 Pro｜版本：v1｜发布：2025-09。
+1. 产品概述
+A200 Pro 为高配款，2025 年上市，适合 35–60 ㎡ 房间。包装清单：主机×1、F-20
+滤芯×1、电源线×1、遥控器×1、说明书×1。
+2. 保修信息
+A200 Pro 整机保修 24 个月，核心部件（电机）保修 36 个月，与 A200
+相同（见《售后政策_通用》）。
+3. 技术参数
+ 项目
+参数
+额定功率
+65 W
+适用面积
+35–60 ㎡
+运…</div></div><div class="source"><div class="source-head">📄 常见问题FAQ_客服内部版.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+3. 参数类
+Q：A200 睡眠档多吵？A：32dB。客户若问出风量、CADR
+值，本资料未提供该参数，请引导查看说明书或记录反馈。
+Q：Pro 更省电吗？A：Pro 功率 65W 高于 A200 的 45W，但适用面积更大，按面积算效率更高。
+4. 兼容性
+Q：第三方滤芯能用吗？A：资料未涉及其他品牌兼容性，仅承诺原厂滤芯（见《滤芯选购指南
+_2025》第 2 页）。…</div></div><div class="source"><div class="source-head">📄 滤芯选购指南_2025.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+2. 更换方法要点
+A200、A200 v1 为底部滤芯仓；A200 Pro 为顶部开启式。详细步骤参见《A200_用户手册_v3》第3
+页。参见《A200Pro_用户手册_v1》第5页。
+3. 常见问题
+Q：A200 Pro 能否使用 F-10？A：不能。F-10 与 F-20
+尺寸与卡扣不同，强行安装会损坏卡扣（见《A200Pro_用户手册_v1》第 4 页）。
+Q：其他品牌滤芯是否兼容？A：本指南不讨论其他品牌兼容性，仅保证原厂滤芯匹配。
+Q：A200 与 A200 v1 是否用同一种滤芯？A：…</div></div>
+    </div>
+    
+
+    <div class="card" style="border-left:6px solid #16a34a;background:#f0fdf4">
+      <div class="card-head">
+        <span class="qid">D-13</span>
+        <span class="cat">型号/版本混淆</span>
+        <span class="badge" style="background:#16a34a">PASS</span>
+        <span class="meta">2757 ms · 调用≈1 次</span>
+      </div>
+      <div class="question">问：A200 睡眠档噪音到底是 32 还是 35 分贝？</div>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">预期（判分标准）</div>
+          <div class="expect">应含关键词</div>
+          <div class="kwbox"><span class="kw">32</span></div>
+          <div class="detail">判定说明：包含全部关键词</div>
+        </div>
+        <div class="col">
+          <div class="col-title">实际（AI 回答）</div>
+          <div class="answer">现行 A200 睡眠档噪音是 **32 dB**。  <br>35 dB 是旧版手册/曾误印的参数，勘误说明已明确以 v3 的 **32 dB** 为准。</div>
+          
+        </div>
+      </div>
+      <div class="col-title" style="margin-top:10px">引用原文（AI 实际用到的片段）</div>
+      <div class="source"><div class="source-head">📄 A200_用户手册_v3.pdf · 第 4 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 4 页
+附录：常见误操作
+误将 F-20 装入 A200：滤芯仓无法完全闭合，机器不启动。请核对滤芯型号。
+夜间睡眠档噪音参考值见第 2 页参数表。如需更安静机型，请了解 A200 Pro。…</div></div><div class="source"><div class="source-head">📄 A200v1_用户手册_旧版.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+3. 技术参数
+ 项目
+参数
+额定功率
+45 W
+适用面积
+20–40 ㎡
+运行噪音（睡眠档）
+35 dB
+适用滤芯型号
+F-10
+滤芯更换周期
+6 个月
+上市年份
+2022
+4. 滤芯说明
+A200 v1 使用 F-10 滤芯，与现售 A200
+同型号，仍可通过正常渠道购买（见《滤芯选购指南_2025》第 1 页）。
+特别注意：F-10 不适用于 A200 Pro（Pro 使用 F-20）。…</div></div><div class="source"><div class="source-head">📄 A200_用户手册_v3.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+3. 技术参数
+ 项目
+参数
+额定功率
+45 W
+适用面积
+20–40 ㎡
+运行噪音（睡眠档）
+32 dB
+适用滤芯型号
+F-10
+滤芯更换周期
+6 个月
+上市年份
+2025
+4. 滤芯更换方法
+断电后打开底部滤芯仓，取出旧滤芯，装入新滤芯并复位。选购建议参见《滤芯选购指南_2025
+》第2页。
+A200 使用 F-10 滤芯；该滤芯同时适配停产机型 A200
+v1（见《A200v1_用户手册_旧版》）。A200 Pro 需使用 F-20 滤芯，两者不可混用。…</div></div><div class="source"><div class="source-head">📄 产品勘误与版本说明_2026Q3.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+产品勘误与版本说明（2026 年第 3 季度）
+本文汇总历史勘误，供客服与维修网点查阅。
+1. 勘误记录
+E-01：《A200_用户手册》v2 版第 2 页噪音参数曾误印为 35dB，v3 已更正为 32dB。以 v3 为准。
+E-02：部分早期宣传物料将 A200 整机保修表述为 36 个月，实为 24 个月（电机 36
+个月），详见《售后政策_通用》。此问题已在新版宣传物料中修正，旧物料可能仍在流通。
+2. 版本现状
+A200_用户手册：现行为 v3（2025-08）。A200Pro_用户手册：现…</div></div>
+    </div>
+    
+
+    <div class="card" style="border-left:6px solid #16a34a;background:#f0fdf4">
+      <div class="card-head">
+        <span class="qid">D-14</span>
+        <span class="cat">无答案/冲突</span>
+        <span class="badge" style="background:#16a34a">PASS</span>
+        <span class="meta">1841 ms · 调用≈1 次</span>
+      </div>
+      <div class="question">问：A200 保修到底是 24 个月还是 36 个月？</div>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">预期（判分标准）</div>
+          <div class="expect">应识别资料冲突</div>
+          <div class="kwbox"><span class="none">—</span></div>
+          <div class="detail">判定说明：同时提到两个数字</div>
+        </div>
+        <div class="col">
+          <div class="col-title">实际（AI 回答）</div>
+          <div class="answer">A200 整机保修 **24 个月**，核心部件（电机）保修 **36 个月**。如果宣传页写“36 个月”，应以说明书为准说明整机为 **24 个月**，并向客户道歉。</div>
+          
+        </div>
+      </div>
+      <div class="col-title" style="margin-top:10px">引用原文（AI 实际用到的片段）</div>
+      <div class="source"><div class="source-head">📄 常见问题FAQ_客服内部版.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+常见问题 FAQ（客服内部版，请勿外发）
+维护：客服组｜更新：2025-11。本 FAQ 供客服话术参考，与正式文档不一致时以说明书为准。
+1. 保修类
+Q：A200 到底保多久？A：整机 24 个月，电机 36 个月。若客户提到宣传页写 36
+个月，请解释以说明书 24 个月为准，并道歉（见《售后政策_通用》第 1 页）。
+Q：A200 Pro 和 A200 保修一样吗？A：一样，均为整机 24 个月。A200 v1 老机型不同，为 12
+个月（已停售）。
+2. 滤芯类
+Q：F-10 能装到 Pro…</div></div><div class="source"><div class="source-head">📄 售后政策_通用.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风系列售后政策（通用版）
+版本：2025-06｜适用：A200、A200 Pro；A200 v1 相关条款见第 2 页历史条款。
+1. 保修期
+A200 与 A200 Pro：整机保修 24 个月；核心部件（电机）保修 36 个月。
+滤芯等耗材不在保修范围。保修细则以各机型随机说明书为准；如宣传材料与说明书不一致，
+以说明书为准。…</div></div><div class="source"><div class="source-head">📄 A200Pro_用户手册_v1.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+4. 滤芯说明
+A200 Pro 专用 F-20 滤芯，更换周期 8 个月。F-20 与 A200、A200 v1 使用的 F-10
+不通用，请勿混装。对照参见《滤芯选购指南_2025》第1页。
+5. 滤芯更换方法
+步骤与 A200 类似，参见《A200_用户手册_v3》第3页。但 A200 Pro 滤芯仓为顶部开启式，与
+A200 底部开启式不同。…</div></div><div class="source"><div class="source-head">📄 售后政策_通用.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+2. A200 v1 历史条款
+A200 v1 已于 2024 年 6 月停止售后，保修期为整机 12 个月（早已届满，仅作存档说明）。
+3. 售后流程
+拨打服务热线 400-XXX-XXXX（虚构号码），提供购买凭证与机身编号，按指引寄送或上门。
+处理时限：收到机器后 15 个工作日。
+4. 相关文档
+参见《A200_用户手册_v3》第2页。参见《A200Pro_用户手册_v1》第2页。参见《A200v1_用户手
+册_旧版》第2页。…</div></div>
+    </div>
+    
+
+    <div class="card" style="border-left:6px solid #16a34a;background:#f0fdf4">
+      <div class="card-head">
+        <span class="qid">D-15</span>
+        <span class="cat">无答案/冲突</span>
+        <span class="badge" style="background:#16a34a">PASS</span>
+        <span class="meta">1825 ms · 调用≈1 次</span>
+      </div>
+      <div class="question">问：A200 能用手机 App 远程控制吗？</div>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">预期（判分标准）</div>
+          <div class="expect">应拒绝作答（不编造）</div>
+          <div class="kwbox"><span class="none">—</span></div>
+          <div class="detail">判定说明：命中否定表述: 无法从</div>
+        </div>
+        <div class="col">
+          <div class="col-title">实际（AI 回答）</div>
+          <div class="answer">无法从文档确认 A200 是否支持手机 App 远程控制。文档仅明确：A200 无遥控器，不支持遥控功能。</div>
+          
+        </div>
+      </div>
+      <div class="col-title" style="margin-top:10px">引用原文（AI 实际用到的片段）</div>
+      <div class="source"><div class="source-head">📄 A200Pro_用户手册_v1.pdf · 第 3 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 3 页
+6. 遥控器配对
+长按遥控器风速键 5 秒，机身指示灯闪烁即配对成功。遥控器仅随 A200 Pro 附带；A200
+无遥控器，不支持遥控功能。
+7. 相关文档
+参见《售后政策_通用》第2页。参见《滤芯选购指南_2025》第1页。…</div></div><div class="source"><div class="source-head">📄 A200Pro_用户手册_v1.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风 A200 Pro 空气净化器 用户手册（第 1 版）
+适用型号：A200 Pro｜版本：v1｜发布：2025-09。
+1. 产品概述
+A200 Pro 为高配款，2025 年上市，适合 35–60 ㎡ 房间。包装清单：主机×1、F-20
+滤芯×1、电源线×1、遥控器×1、说明书×1。
+2. 保修信息
+A200 Pro 整机保修 24 个月，核心部件（电机）保修 36 个月，与 A200
+相同（见《售后政策_通用》）。
+3. 技术参数
+ 项目
+参数
+额定功率
+65 W
+适用面积
+35–60 ㎡
+运…</div></div><div class="source"><div class="source-head">📄 A200v1_用户手册_旧版.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风 A200 v1 空气净化器 用户手册（旧版存档）
+适用型号：A200 v1｜版本：v2｜发布：2022-05。
+【注意】停产声明：A200 v1 已于 2024 年 6 月停止生产与售后。仍有购机需求的用户建议选择现售的 A200
+或 A200 Pro。
+1. 产品概述
+A200 v1 为 A200 系列初代机型，2022 年上市，适合 20–40 ㎡。包装清单：主机×1、F-10
+滤芯×1、电源线×1、说明书×1（无遥控器）。
+2. 保修信息（历史存档）
+A200 v1 整机保修 12 个月，…</div></div><div class="source"><div class="source-head">📄 滤芯选购指南_2025.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+2. 更换方法要点
+A200、A200 v1 为底部滤芯仓；A200 Pro 为顶部开启式。详细步骤参见《A200_用户手册_v3》第3
+页。参见《A200Pro_用户手册_v1》第5页。
+3. 常见问题
+Q：A200 Pro 能否使用 F-10？A：不能。F-10 与 F-20
+尺寸与卡扣不同，强行安装会损坏卡扣（见《A200Pro_用户手册_v1》第 4 页）。
+Q：其他品牌滤芯是否兼容？A：本指南不讨论其他品牌兼容性，仅保证原厂滤芯匹配。
+Q：A200 与 A200 v1 是否用同一种滤芯？A：…</div></div>
+    </div>
+    
+
+    <div class="card" style="border-left:6px solid #16a34a;background:#f0fdf4">
+      <div class="card-head">
+        <span class="qid">D-16</span>
+        <span class="cat">无答案/冲突</span>
+        <span class="badge" style="background:#16a34a">PASS</span>
+        <span class="meta">1289 ms · 调用≈1 次</span>
+      </div>
+      <div class="question">问：A200 的 CADR 值是多少？</div>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">预期（判分标准）</div>
+          <div class="expect">应拒绝作答（不编造）</div>
+          <div class="kwbox"><span class="none">—</span></div>
+          <div class="detail">判定说明：命中否定表述: 未提供</div>
+        </div>
+        <div class="col">
+          <div class="col-title">实际（AI 回答）</div>
+          <div class="answer">文档中未提供 A200 的 CADR 值。FAQ 中提到：如客户询问 CADR 值，本资料未提供该参数，请引导查看说明书或记录反馈。</div>
+          
+        </div>
+      </div>
+      <div class="col-title" style="margin-top:10px">引用原文（AI 实际用到的片段）</div>
+      <div class="source"><div class="source-head">📄 常见问题FAQ_客服内部版.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+3. 参数类
+Q：A200 睡眠档多吵？A：32dB。客户若问出风量、CADR
+值，本资料未提供该参数，请引导查看说明书或记录反馈。
+Q：Pro 更省电吗？A：Pro 功率 65W 高于 A200 的 45W，但适用面积更大，按面积算效率更高。
+4. 兼容性
+Q：第三方滤芯能用吗？A：资料未涉及其他品牌兼容性，仅承诺原厂滤芯（见《滤芯选购指南
+_2025》第 2 页）。…</div></div><div class="source"><div class="source-head">📄 A200Pro_用户手册_v1.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风 A200 Pro 空气净化器 用户手册（第 1 版）
+适用型号：A200 Pro｜版本：v1｜发布：2025-09。
+1. 产品概述
+A200 Pro 为高配款，2025 年上市，适合 35–60 ㎡ 房间。包装清单：主机×1、F-20
+滤芯×1、电源线×1、遥控器×1、说明书×1。
+2. 保修信息
+A200 Pro 整机保修 24 个月，核心部件（电机）保修 36 个月，与 A200
+相同（见《售后政策_通用》）。
+3. 技术参数
+ 项目
+参数
+额定功率
+65 W
+适用面积
+35–60 ㎡
+运…</div></div><div class="source"><div class="source-head">📄 产品勘误与版本说明_2026Q3.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+产品勘误与版本说明（2026 年第 3 季度）
+本文汇总历史勘误，供客服与维修网点查阅。
+1. 勘误记录
+E-01：《A200_用户手册》v2 版第 2 页噪音参数曾误印为 35dB，v3 已更正为 32dB。以 v3 为准。
+E-02：部分早期宣传物料将 A200 整机保修表述为 36 个月，实为 24 个月（电机 36
+个月），详见《售后政策_通用》。此问题已在新版宣传物料中修正，旧物料可能仍在流通。
+2. 版本现状
+A200_用户手册：现行为 v3（2025-08）。A200Pro_用户手册：现…</div></div><div class="source"><div class="source-head">📄 快速安装指南_A200系列.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风 A200 系列 · 快速安装指南
+适用：A200、A200 Pro（v1 老机型请参照旧版手册）。
+1. 开箱核对：按各机型包装清单核对（清单明细见《A200_用户手册_v3》第 1
+页、《A200Pro_用户手册_v1》第 1 页）。
+2. 撕除滤芯包装膜，装入滤芯仓（A200 底部仓，Pro 顶部仓）。
+3. 接通电源，开机自检约 10 秒。
+4. 摆放：离墙 30cm 以上，适用面积参考各机型参数页。
+【注意】滤芯型号装错会导致无法开机：A200/v1 用 F-10，Pro 用 F-20（…</div></div>
+    </div>
+    
+
+    <div class="card" style="border-left:6px solid #16a34a;background:#f0fdf4">
+      <div class="card-head">
+        <span class="qid">D-17</span>
+        <span class="cat">无答案/冲突</span>
+        <span class="badge" style="background:#16a34a">PASS</span>
+        <span class="meta">1951 ms · 调用≈1 次</span>
+      </div>
+      <div class="question">问：其他品牌的滤芯能用在 A200 上吗？</div>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">预期（判分标准）</div>
+          <div class="expect">应拒绝作答（不编造）</div>
+          <div class="kwbox"><span class="none">—</span></div>
+          <div class="detail">判定说明：命中否定表述: 未提供</div>
+        </div>
+        <div class="col">
+          <div class="col-title">实际（AI 回答）</div>
+          <div class="answer">文档未提供“其他品牌滤芯能否用于 A200”的明确信息；仅说明不讨论其他品牌兼容性，只保证原厂滤芯匹配。因此无法根据现有资料确认。</div>
+          
+        </div>
+      </div>
+      <div class="col-title" style="margin-top:10px">引用原文（AI 实际用到的片段）</div>
+      <div class="source"><div class="source-head">📄 A200Pro_用户手册_v1.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+4. 滤芯说明
+A200 Pro 专用 F-20 滤芯，更换周期 8 个月。F-20 与 A200、A200 v1 使用的 F-10
+不通用，请勿混装。对照参见《滤芯选购指南_2025》第1页。
+5. 滤芯更换方法
+步骤与 A200 类似，参见《A200_用户手册_v3》第3页。但 A200 Pro 滤芯仓为顶部开启式，与
+A200 底部开启式不同。…</div></div><div class="source"><div class="source-head">📄 滤芯选购指南_2025.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风系列滤芯选购指南（2025 年版）
+适用品牌：净风全系。本文为选购建议，具体参数以各机型说明书为准。
+1. 滤芯型号对照
+ 滤芯型号
+适配机型
+更换周期
+备注
+F-10
+A200、A200 v1（停产）
+6 个月
+现售，供货充足
+F-20
+A200 Pro
+8 个月
+仅适配 Pro，容量更大
+以上对照与各机型说明书一致；如发现不一致，以说明书为准并反馈客服。…</div></div><div class="source"><div class="source-head">📄 滤芯选购指南_2025.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+2. 更换方法要点
+A200、A200 v1 为底部滤芯仓；A200 Pro 为顶部开启式。详细步骤参见《A200_用户手册_v3》第3
+页。参见《A200Pro_用户手册_v1》第5页。
+3. 常见问题
+Q：A200 Pro 能否使用 F-10？A：不能。F-10 与 F-20
+尺寸与卡扣不同，强行安装会损坏卡扣（见《A200Pro_用户手册_v1》第 4 页）。
+Q：其他品牌滤芯是否兼容？A：本指南不讨论其他品牌兼容性，仅保证原厂滤芯匹配。
+Q：A200 与 A200 v1 是否用同一种滤芯？A：…</div></div><div class="source"><div class="source-head">📄 A200v1_用户手册_旧版.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+3. 技术参数
+ 项目
+参数
+额定功率
+45 W
+适用面积
+20–40 ㎡
+运行噪音（睡眠档）
+35 dB
+适用滤芯型号
+F-10
+滤芯更换周期
+6 个月
+上市年份
+2022
+4. 滤芯说明
+A200 v1 使用 F-10 滤芯，与现售 A200
+同型号，仍可通过正常渠道购买（见《滤芯选购指南_2025》第 1 页）。
+特别注意：F-10 不适用于 A200 Pro（Pro 使用 F-20）。…</div></div>
+    </div>
+    
+
+    <div class="card" style="border-left:6px solid #16a34a;background:#f0fdf4">
+      <div class="card-head">
+        <span class="qid">D-18</span>
+        <span class="cat">无答案/冲突</span>
+        <span class="badge" style="background:#16a34a">PASS</span>
+        <span class="meta">1812 ms · 调用≈1 次</span>
+      </div>
+      <div class="question">问：A200 Pro 有延保服务吗？</div>
+      <div class="cols">
+        <div class="col">
+          <div class="col-title">预期（判分标准）</div>
+          <div class="expect">应拒绝作答（不编造）</div>
+          <div class="kwbox"><span class="none">—</span></div>
+          <div class="detail">判定说明：命中否定表述: 无法从</div>
+        </div>
+        <div class="col">
+          <div class="col-title">实际（AI 回答）</div>
+          <div class="answer">无法从提供的文档中找到 A200 Pro 是否有延保服务的信息。</div>
+          
+        </div>
+      </div>
+      <div class="col-title" style="margin-top:10px">引用原文（AI 实际用到的片段）</div>
+      <div class="source"><div class="source-head">📄 A200Pro_用户手册_v1.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+4. 滤芯说明
+A200 Pro 专用 F-20 滤芯，更换周期 8 个月。F-20 与 A200、A200 v1 使用的 F-10
+不通用，请勿混装。对照参见《滤芯选购指南_2025》第1页。
+5. 滤芯更换方法
+步骤与 A200 类似，参见《A200_用户手册_v3》第3页。但 A200 Pro 滤芯仓为顶部开启式，与
+A200 底部开启式不同。…</div></div><div class="source"><div class="source-head">📄 A200_促销宣传单页.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风 A200 · 年度焕新特惠！
+全屋净呼吸，从净风 A200 开始！基础款也有旗舰级安心保障——整机保修长达 36 个月！
+睡眠档低至 32dB，45W 节能动力，20–40 ㎡ 全屋适用，F-10 滤芯全年仅需更换两次。
+买 A200 送一年滤芯优惠券！活动门店详见当地海报。
+【注意】宣传页与说明书如有出入，以《A200_用户手册_v3》与《售后政策_通用》为准。
+了解高配款：A200 Pro 适合 35–60 ㎡ 大空间，28dB
+更安静（详见《A200Pro_用户手册_v1》）。…</div></div><div class="source"><div class="source-head">📄 A200v1_用户手册_旧版.pdf · 第 1 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 1 页
+净风 A200 v1 空气净化器 用户手册（旧版存档）
+适用型号：A200 v1｜版本：v2｜发布：2022-05。
+【注意】停产声明：A200 v1 已于 2024 年 6 月停止生产与售后。仍有购机需求的用户建议选择现售的 A200
+或 A200 Pro。
+1. 产品概述
+A200 v1 为 A200 系列初代机型，2022 年上市，适合 20–40 ㎡。包装清单：主机×1、F-10
+滤芯×1、电源线×1、说明书×1（无遥控器）。
+2. 保修信息（历史存档）
+A200 v1 整机保修 12 个月，…</div></div><div class="source"><div class="source-head">📄 常见问题FAQ_客服内部版.pdf · 第 2 页</div><div class="source-text">…虚构演示资料 · 与任何真实产品无关 · 第 2 页
+3. 参数类
+Q：A200 睡眠档多吵？A：32dB。客户若问出风量、CADR
+值，本资料未提供该参数，请引导查看说明书或记录反馈。
+Q：Pro 更省电吗？A：Pro 功率 65W 高于 A200 的 45W，但适用面积更大，按面积算效率更高。
+4. 兼容性
+Q：第三方滤芯能用吗？A：资料未涉及其他品牌兼容性，仅承诺原厂滤芯（见《滤芯选购指南
+_2025》第 2 页）。…</div></div>
+    </div>
+    
+</div>
+</body>
+</html>
