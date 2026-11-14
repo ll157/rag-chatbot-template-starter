@@ -122,10 +122,12 @@ def main() -> None:
     parser.add_argument("--limit", type=int, default=0, help="只跑前 N 题（0=全部）")
     parser.add_argument("--ids", type=str, default="", help="只跑指定题号，逗号分隔")
     parser.add_argument("--tag", type=str, default="", help="文件名标签，如 topk3")
+    parser.add_argument("--file", type=str, default="", help="题库文件（默认开发集 questions_dev.json；封存测试传 questions_sealed.json）")
     args = parser.parse_args()
 
     check_health()
-    items = json.loads(QUESTIONS.read_text(encoding="utf-8"))["questions"]
+    questions_path = ROOT / "docs" / "eval" / args.file if args.file else QUESTIONS
+    items = json.loads(questions_path.read_text(encoding="utf-8"))["questions"]
     if args.ids:
         wanted = {x.strip() for x in args.ids.split(",") if x.strip()}
         items = [it for it in items if it["id"] in wanted]

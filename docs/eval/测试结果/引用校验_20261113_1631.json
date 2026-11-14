@@ -1,0 +1,142 @@
+{
+  "generated_at": "2026-11-13T16:31:49",
+  "document_files": 20,
+  "violations": 0,
+  "cases": [
+    {
+      "tag": "R-01",
+      "type": "real",
+      "question": "A200 的保修期是多久？",
+      "status": "PASS",
+      "problems": [],
+      "source_count": 4,
+      "answer": "A200 整机保修 24 个月，核心部件（电机）保修 36 个月。滤芯等耗材不在保修范围。",
+      "sources": [
+        {
+          "filename": "售后政策_通用.pdf",
+          "page": 1
+        },
+        {
+          "filename": "售后政策_通用.pdf",
+          "page": 2
+        },
+        {
+          "filename": "A200Pro_用户手册_v1.pdf",
+          "page": 2
+        },
+        {
+          "filename": "常见问题FAQ_客服内部版.pdf",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "tag": "R-02",
+      "type": "real",
+      "question": "A200 和 Pro 的滤芯仓在哪里？",
+      "status": "PASS",
+      "problems": [],
+      "source_count": 4,
+      "answer": "A200（及 A200 v1）为底部滤芯仓；A200 Pro 为顶部开启式滤芯仓。",
+      "sources": [
+        {
+          "filename": "A200Pro_用户手册_v1.pdf",
+          "page": 2
+        },
+        {
+          "filename": "滤芯选购指南_2025.pdf",
+          "page": 2
+        },
+        {
+          "filename": "A200Pro_用户手册_v1.pdf",
+          "page": 1
+        },
+        {
+          "filename": "快速安装指南_A200系列.pdf",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "tag": "R-03",
+      "type": "real",
+      "question": "滤芯的更换周期是多久？",
+      "status": "PASS",
+      "problems": [],
+      "source_count": 4,
+      "answer": "滤芯更换周期取决于型号：\n\n- **F-20 滤芯（A200 Pro）**：**8 个月**\n- **F-10 滤芯（A200、A200 v1）**：**6 个月**",
+      "sources": [
+        {
+          "filename": "A200Pro_用户手册_v1.pdf",
+          "page": 2
+        },
+        {
+          "filename": "A200_用户手册_v3.pdf",
+          "page": 2
+        },
+        {
+          "filename": "滤芯选购指南_2025.pdf",
+          "page": 1
+        },
+        {
+          "filename": "A200v1_用户手册_旧版.pdf",
+          "page": 2
+        }
+      ]
+    },
+    {
+      "tag": "A-01",
+      "type": "adversarial",
+      "question": "A300 的保修期是多久？",
+      "status": "REFUSED_OK",
+      "problems": [],
+      "source_count": 4,
+      "answer": "文档中没有关于 A300 保修期的信息，无法确认。",
+      "sources": [
+        {
+          "filename": "售后政策_通用.pdf",
+          "page": 1
+        },
+        {
+          "filename": "售后政策_通用.pdf",
+          "page": 2
+        },
+        {
+          "filename": "产品勘误与版本说明_2026Q3.pdf",
+          "page": 1
+        },
+        {
+          "filename": "常见问题FAQ_客服内部版.pdf",
+          "page": 1
+        }
+      ]
+    },
+    {
+      "tag": "A-02",
+      "type": "adversarial",
+      "question": "X999 型号的滤芯多久换一次？",
+      "status": "REFUSED_OK",
+      "problems": [],
+      "source_count": 4,
+      "answer": "无法在提供的文档中找到 X999 型号及其滤芯更换周期的信息。",
+      "sources": [
+        {
+          "filename": "A200Pro_用户手册_v1.pdf",
+          "page": 2
+        },
+        {
+          "filename": "A200v1_用户手册_旧版.pdf",
+          "page": 2
+        },
+        {
+          "filename": "A200_用户手册_v3.pdf",
+          "page": 2
+        },
+        {
+          "filename": "滤芯选购指南_2025.pdf",
+          "page": 1
+        }
+      ]
+    }
+  ]
+}

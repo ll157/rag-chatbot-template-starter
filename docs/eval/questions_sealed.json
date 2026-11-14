@@ -1,0 +1,93 @@
+{
+  "meta": {
+    "created": "2026-11-14",
+    "rule": "封存题：跑分前不参与任何代码调优；跑后若据失败修复，须在测试报告记录该题已参与调试并补新题。",
+    "污染声明": "S 系列题目由 AI 出题（与开发者同源，已避开开发集原句与考点重合）；U 系列由用户本人出题（真实用户视角，最接近线上真实提问）。"
+  },
+  "questions": [
+    {
+      "id": "S-01",
+      "category": "口语复合（无标点）",
+      "expect": "answer",
+      "question": "A200滤芯型号是什么多久换一次",
+      "must_contain": ["F-10", "6"]
+    },
+    {
+      "id": "S-02",
+      "category": "宣传冲突",
+      "expect": "conflict",
+      "question": "宣传页说 A200 整机保修 36 个月，这个说法对吗？",
+      "must_contain": []
+    },
+    {
+      "id": "S-03",
+      "category": "跨型号对比",
+      "expect": "answer",
+      "question": "A200 和 A200 Pro 的滤芯通用吗？",
+      "must_contain": ["F-10", "F-20"]
+    },
+    {
+      "id": "S-04",
+      "category": "旧款与停产",
+      "expect": "answer",
+      "question": "老款 A200 v1 现在还在保修范围内吗？",
+      "must_contain": ["12"]
+    },
+    {
+      "id": "S-05",
+      "category": "跨型号配件",
+      "expect": "answer",
+      "question": "Pro 的滤芯装到普通 A200 上行不行？",
+      "must_contain": ["F-20"]
+    },
+    {
+      "id": "S-06",
+      "category": "跨文档综合",
+      "expect": "answer",
+      "question": "A200 用什么型号滤芯？A200 Pro 用的又是什么？",
+      "must_contain": ["F-10", "F-20"]
+    },
+    {
+      "id": "S-07",
+      "category": "无答案",
+      "expect": "no_answer",
+      "question": "A500 什么时候上市？",
+      "must_contain": []
+    },
+    {
+      "id": "S-08",
+      "category": "无答案",
+      "expect": "no_answer",
+      "question": "这台机能连手机 App 远程看水质吗？",
+      "must_contain": []
+    },
+    {
+      "id": "S-09",
+      "category": "无答案（边界）",
+      "expect": "no_answer",
+      "question": "保修期过了以后上门维修收不收费？",
+      "must_contain": []
+    },
+    {
+      "id": "U-01",
+      "category": "用户题（购买建议）",
+      "expect": "answer",
+      "question": "你给我推荐一个家用的吧，我们家三个人。",
+      "must_contain": ["A200"]
+    },
+    {
+      "id": "U-02",
+      "category": "用户题（保修边界）",
+      "expect": "answer",
+      "question": "A200 零件坏了保修吗？要另外花钱吗？",
+      "must_contain": ["24"]
+    },
+    {
+      "id": "U-03",
+      "category": "用户题（退货政策）",
+      "expect": "no_answer",
+      "question": "有七天无理由退货吗？",
+      "must_contain": []
+    }
+  ]
+}
