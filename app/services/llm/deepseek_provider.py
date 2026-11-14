@@ -27,14 +27,27 @@ class DeepSeekProvider:
         if not context.strip():
             return "未在资料中找到与该问题相关的信息。"
         prompt = build_rag_prompt(question=question, context=context)
-        try:
-            response = self.client.chat.completions.create(
-                model=settings.deepseek_model,
-                messages=[{"role": "user", "content": prompt}],
-                max_tokens=settings.deepseek_max_tokens,
-                temperature=0.1,
-            )
-        except Exception as exc:
-            detail = str(exc)[:200]
-            raise RuntimeError(f"DeepSeek generation failed: {detail}") from exc
-        return (response.choices[0].message.content or "").strip()
+
+        # 2026-11-14 加固：独立测试 T-01 发现模型偶发返回空内容且被透传给用户
+        # （检索正常、耗时正常、answer 为空字符串）。防线：空内容自动重试 1 次，
+        # 仍为空则返回兜底话术——绝不让用户看到"空白回答"。
+        last_error: Exception | None = None
+        for attempt in range(2):
+            try:
+                response = self.client.chat.completions.create(
+                    model=settings.deepseek_model,
+                    messages=[{"role": "user", "content": prompt}],
+                    max_tokens=settings.deepseek_max_tokens,
+                    temperature=0.1,
+                )
+            except Exception as exc:
+                last_error = exc
+                if attempt == 1:
+                    detail = str(exc)[:200]
+                    raise RuntimeError(f"DeepSeek generation failed: {detail}") from exc
+                continue
+            content = (response.choices[0].message.content or "").strip()
+            if content:
+                return content
+            # 空内容：重试一次（偶发的模型侧异常，重试通常可恢复）
+        return "抱歉，本次回答生成失败，请重新提问。"
