@@ -252,8 +252,8 @@
 4. **事故留档**：首轮 3 题全 FAIL（成绩单_repro_20261114_1709.csv，0 引用，"No relevant information"）——根因即上述 .env 路径移植陷阱，原始记录留档不删。
 
 ### 未验证 / 待办
-- 真·GitHub 克隆复现（网络恢复后补做一次 clone 验证）。
-- 用户 GitHub 网页整理（About/Topics/README 渲染核对）与 Gitee 镜像。
+- ~~真·GitHub 克隆复现~~（已完成：网络恢复后 clone 验证 HEAD=33cfbd1、start.bat/README.md 均在）。
+- ~~用户 GitHub 网页整理~~（已完成：About 描述 + 6 个标签 + README 渲染/最新提交核对通过；分支领先上游 28 提交即个人改造证明）。**Gitee 镜像：用户决策不做**（GitHub 为主交付，不阻塞）。
 - 复现目录保留作证据（含完整 venv，占用约数 GB，Day9 收官后可删）。
 - 复现事故「.env 移植陷阱」可补入面试复盘手册（Day9 顺带）。
 
